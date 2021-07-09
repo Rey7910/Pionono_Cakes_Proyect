@@ -8,6 +8,7 @@ drop table if exists Maquinaría_y_Equipo;
 drop table if exists Empresa;
 drop table if exists Contrato;
 drop table if exists Empleado;
+drop table if exists Sucursal;
 
 CREATE TABLE Proveedor(
     NIT	varchar(45),
@@ -59,11 +60,42 @@ CREATE TABLE Empresa(
 
 CREATE TABLE Contrato(
     idContrato int,
-    Empresa_NIT  varchar(45),
+    NIT  varchar(45),
     Fecha_Contratación varchar(45),
     Cargo varchar(45),
     Salario varchar(45),
     Fecha_Terminación varchar(45),
-    PRIMARY KEY (idContrato,Empresa_NIT),
-    FOREIGN KEY (Empresa_NIT) REFERENCES Empresa(NIT)
+    PRIMARY KEY (idContrato,NIT),
+    FOREIGN KEY (NIT) REFERENCES Empresa(NIT)
 );
+
+
+CREATE TABLE Empleado(
+    idEmpleado int,
+    idContrato  int,
+    Nombre varchar(45),
+    Apellido varchar(45),
+    Dirección varchar(45),
+    Teléfono varchar(45),
+    EPS varchar(45),
+    Ciudad varchar(45),
+    Fecha_de_nacimiento varchar(45),
+    PRIMARY KEY (idEmpleado,idContrato),
+    FOREIGN KEY (idContrato) REFERENCES Contrato(idContrato)
+);
+
+CREATE TABLE Sucursal(
+    idSucursal int,
+    NIT varchar(45),
+    idEmpleado int,
+    Categoría varchar(45),
+    Nombre varchar(45),
+    Ubicación varchar(45),
+    Ciudad varchar(45),
+    Inventario varchar(45),
+    Administrador varchar(45),
+    PRIMARY KEY (idSucursal,NIT,idEmpleado),
+    FOREIGN KEY (NIT) REFERENCES Empresa(NIT),
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
+);
+
