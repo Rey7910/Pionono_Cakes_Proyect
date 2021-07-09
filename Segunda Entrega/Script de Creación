@@ -2,6 +2,13 @@ DROP SCHEMA IF EXISTS pionono_cakes;
 CREATE SCHEMA pionono_cakes;
 USE pionono_cakes;
 
+drop table if exists Proveedor;
+drop table if exists Insumo;
+drop table if exists Maquinaría_y_Equipo;
+drop table if exists Empresa;
+drop table if exists Contrato;
+drop table if exists Empleado;
+
 CREATE TABLE Proveedor(
     NIT	varchar(45),
     Razón_Social  varchar(45),
@@ -23,5 +30,40 @@ CREATE TABLE Insumo(
     Marca varchar(45),
     Estado_de_pago varchar(10),
     Cantidad_a_pagar decimal,
+    IVA decimal,
     PRIMARY KEY (idInsumo)
+);
+
+CREATE TABLE Maquinaría_y_Equipo(
+    idMaquinaría_y_Equipo int,
+    Nombre  varchar(45),
+    Cantidad int(3),
+    Fecha_de_compra varchar(45), 
+    Precio decimal, 
+    Marca varchar(45),
+    Garantía varchar(45),
+    IVA decimal,
+    Estado_de_pago varchar(45),
+	Cantidad_a_pagar decimal,
+    PRIMARY KEY (idMaquinaría_y_Equipo)
+);
+
+CREATE TABLE Empresa(
+    NIT varchar(45),
+    Razón_Social  varchar(45),
+    Representante_legal varchar(45),
+    Dirección varchar(45),
+    País varchar(45),
+    PRIMARY KEY (NIT)
+);
+
+CREATE TABLE Contrato(
+    idContrato int,
+    Empresa_NIT  varchar(45),
+    Fecha_Contratación varchar(45),
+    Cargo varchar(45),
+    Salario varchar(45),
+    Fecha_Terminación varchar(45),
+    PRIMARY KEY (idContrato,Empresa_NIT),
+    FOREIGN KEY (Empresa_NIT) REFERENCES Empresa(NIT)
 );
