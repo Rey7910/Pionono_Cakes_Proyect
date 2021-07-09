@@ -9,6 +9,7 @@ drop table if exists Empresa;
 drop table if exists Contrato;
 drop table if exists Empleado;
 drop table if exists Sucursal;
+drop table if exists Inventario;
 
 CREATE TABLE Proveedor(
     NIT	varchar(45),
@@ -99,3 +100,9 @@ CREATE TABLE Sucursal(
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
 );
 
+CREATE TABLE Inventario(
+    idInventario varchar(45),
+    idSucursal int,
+    PRIMARY KEY (idInventario,idSucursal),
+    FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal)
+);
