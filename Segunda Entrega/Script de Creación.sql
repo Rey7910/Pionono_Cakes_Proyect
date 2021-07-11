@@ -58,7 +58,7 @@ CREATE TABLE Maquinaría_y_Equipo(
     Garantía varchar(45),
     IVA decimal,
     Estado_de_pago varchar(45),
-	Cantidad_a_pagar decimal,
+    Cantidad_a_pagar decimal,
     PRIMARY KEY (idMaquinaría_y_Equipo)
 );
 
