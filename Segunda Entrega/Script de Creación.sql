@@ -1,3 +1,11 @@
+-- Script de Creación de la Base de Datos de la microempresa Pionono Cakes
+-- Desarrolladores:
+-- 	Reinaldo Toledo Leguizamón
+-- 	Santiago Hernández Chaparro
+-- 	Johan David Clavijo Rodríguez 
+
+-- Proyecto de Bases de Datos 2021-1
+
 DROP SCHEMA IF EXISTS pionono_cakes;
 CREATE SCHEMA pionono_cakes;
 USE pionono_cakes;
@@ -10,7 +18,11 @@ drop table if exists Contrato;
 drop table if exists Empleado;
 drop table if exists Sucursal;
 drop table if exists Inventario;
+drop table if exists Producto;
+drop table if exists Cliente;
+drop table if exists Venta;
 
+-- Creación de las tablas
 CREATE TABLE Proveedor(
     NIT	varchar(45),
     Razón_Social  varchar(45),
@@ -104,5 +116,33 @@ CREATE TABLE Inventario(
     idInventario varchar(45),
     idSucursal int,
     PRIMARY KEY (idInventario,idSucursal),
+    FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal)
+);
+CREATE TABLE Producto(
+    idProducto int,
+    Nombre varchar(45),
+    Precio decimal,
+    Fecha_de_producción varchar(45),
+    Categoría varchar(45),
+	Fecha_de_caducidad varchar(45),
+    Punto_de_fabricación int,
+    PRIMARY KEY (idProducto)
+);
+CREATE TABLE Cliente(
+    idCliente int,
+    Nombre varchar(45),
+    Apellido varchar(45),
+    Perfil varchar(45),
+    PRIMARY KEY (idCliente)
+);
+CREATE TABLE Venta(
+    idVenta int,
+    idEmpleado int,
+    idCliente int,
+	idSucursal int,
+    Fecha varchar(45),
+    PRIMARY KEY (idVenta,idEmpleado,idCliente,idSucursal),
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal)
 );
