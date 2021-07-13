@@ -1,4 +1,4 @@
--- Script de Creación de la Base de Datos de la microempresa Pionono Cakes
+-- Script de Creación de la Base de Datos de Pionono Cakes
 -- Desarrolladores:
 -- Reinaldo Toledo Leguizamón
 -- Santiago Hernández Chaparro
