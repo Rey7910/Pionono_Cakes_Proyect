@@ -1,8 +1,8 @@
 -- Script de Creación de la Base de Datos de la microempresa Pionono Cakes
 -- Desarrolladores:
--- 	Reinaldo Toledo Leguizamón
--- 	Santiago Hernández Chaparro
--- 	Johan David Clavijo Rodríguez 
+-- Reinaldo Toledo Leguizamón
+-- Santiago Hernández Chaparro
+-- Johan David Clavijo Rodríguez 
 
 -- Proyecto de Bases de Datos 2021-1
 
@@ -21,6 +21,7 @@ drop table if exists Inventario;
 drop table if exists Producto;
 drop table if exists Cliente;
 drop table if exists Venta;
+drop table if exists Domicilio;
 
 -- Creación de las tablas
 CREATE TABLE Proveedor(
@@ -124,7 +125,7 @@ CREATE TABLE Producto(
     Precio decimal,
     Fecha_de_producción varchar(45),
     Categoría varchar(45),
-	Fecha_de_caducidad varchar(45),
+    Fecha_de_caducidad varchar(45),
     Punto_de_fabricación int,
     PRIMARY KEY (idProducto)
 );
@@ -139,10 +140,23 @@ CREATE TABLE Venta(
     idVenta int,
     idEmpleado int,
     idCliente int,
-	idSucursal int,
+    idSucursal int,
     Fecha varchar(45),
     PRIMARY KEY (idVenta,idEmpleado,idCliente,idSucursal),
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal)
 );
+
+CREATE TABLE Domicilio(
+    idDomicilio int,
+    idCliente int,
+    idEmpleado int,
+    idVenta int,
+    Dirección_entrega varchar(45),
+    PRIMARY KEY (idDomicilio,idCliente,idEmpleado,idVenta),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
+    FOREIGN KEY (idVenta) REFERENCES Venta(idVenta)
+);
+
