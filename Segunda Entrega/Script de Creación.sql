@@ -49,7 +49,7 @@ CREATE TABLE Insumo(
     PRIMARY KEY (idInsumo)
 );
 
-CREATE TABLE Maquinaría_y_Equipo(
+CREATE TABLE Maquinaria_y_Equipo(
     idMaquinaría_y_Equipo int,
     Nombre  varchar(45),
     Cantidad int(3),
