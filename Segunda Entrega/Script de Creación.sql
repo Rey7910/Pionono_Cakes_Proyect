@@ -30,7 +30,7 @@ CREATE TABLE Proveedor(
     Ubicacion varchar(45),
     Persona_de_contacto varchar(45), 
     Telefono_de_contacto varchar(45), 
-    Categoría varchar(45),
+    Categoria varchar(45),
     Terminos_de_Negociación longtext,
     email varchar(45),
     PRIMARY KEY (NIT)
@@ -56,7 +56,7 @@ CREATE TABLE Maquinaría_y_Equipo(
     Fecha_de_compra varchar(45), 
     Precio decimal, 
     Marca varchar(45),
-    Garantía varchar(45),
+    Garantia varchar(45),
     IVA decimal,
     Estado_de_pago varchar(45),
     Cantidad_a_pagar decimal,
@@ -78,7 +78,7 @@ CREATE TABLE Contrato(
     Fecha_Contratación varchar(45),
     Cargo varchar(45),
     Salario varchar(45),
-    Fecha_Terminación varchar(45),
+    Fecha_Terminacion varchar(45),
     PRIMARY KEY (idContrato,NIT),
     FOREIGN KEY (NIT) REFERENCES Empresa(NIT)
 );
