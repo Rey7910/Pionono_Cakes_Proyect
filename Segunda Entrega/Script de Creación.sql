@@ -12,7 +12,7 @@ USE pionono_cakes;
 
 drop table if exists Proveedor;
 drop table if exists Insumo;
-drop table if exists Maquinaría_y_Equipo;
+drop table if exists Maquinaria_y_Equipo;
 drop table if exists Empresa;
 drop table if exists Contrato;
 drop table if exists Empleado;
@@ -26,12 +26,12 @@ drop table if exists Domicilio;
 -- Creación de las tablas
 CREATE TABLE Proveedor(
     NIT	varchar(45),
-    Razón_Social  varchar(45),
-    Ubicación varchar(45),
+    Razon_Social  varchar(45),
+    Ubicacion varchar(45),
     Persona_de_contacto varchar(45), 
-    Teléfono_de_contacto varchar(45), 
+    Telefono_de_contacto varchar(45), 
     Categoría varchar(45),
-    Términos_de_Negociación longtext,
+    Terminos_de_Negociación longtext,
     email varchar(45),
     PRIMARY KEY (NIT)
 );
@@ -49,7 +49,7 @@ CREATE TABLE Insumo(
     PRIMARY KEY (idInsumo)
 );
 
-CREATE TABLE Maquinaria_y_Equipo(
+CREATE TABLE Maquinaría_y_Equipo(
     idMaquinaría_y_Equipo int,
     Nombre  varchar(45),
     Cantidad int(3),
@@ -65,10 +65,10 @@ CREATE TABLE Maquinaria_y_Equipo(
 
 CREATE TABLE Empresa(
     NIT varchar(45),
-    Razón_Social  varchar(45),
+    Razon_Social  varchar(45),
     Representante_legal varchar(45),
-    Dirección varchar(45),
-    País varchar(45),
+    Direccion varchar(45),
+    Pais varchar(45),
     PRIMARY KEY (NIT)
 );
 
@@ -89,8 +89,8 @@ CREATE TABLE Empleado(
     idContrato  int,
     Nombre varchar(45),
     Apellido varchar(45),
-    Dirección varchar(45),
-    Teléfono varchar(45),
+    Direccion varchar(45),
+    Telefono varchar(45),
     EPS varchar(45),
     Ciudad varchar(45),
     Fecha_de_nacimiento varchar(45),
@@ -102,9 +102,9 @@ CREATE TABLE Sucursal(
     idSucursal int,
     NIT varchar(45),
     idEmpleado int,
-    Categoría varchar(45),
+    Categoria varchar(45),
     Nombre varchar(45),
-    Ubicación varchar(45),
+    Ubicacion varchar(45),
     Ciudad varchar(45),
     Inventario varchar(45),
     Administrador varchar(45),
@@ -123,8 +123,8 @@ CREATE TABLE Producto(
     idProducto int,
     Nombre varchar(45),
     Precio decimal,
-    Fecha_de_producción varchar(45),
-    Categoría varchar(45),
+    Fecha_de_produccion varchar(45),
+    Categoria varchar(45),
     Fecha_de_caducidad varchar(45),
     Punto_de_fabricación int,
     PRIMARY KEY (idProducto)
