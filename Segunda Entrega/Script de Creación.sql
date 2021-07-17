@@ -89,7 +89,6 @@ CREATE TABLE Empleado(
     idContrato  int,
     Nombre varchar(45),
     Apellido varchar(45),
-    Puesto varchar(45),
     Direccion varchar(45),
     Telefono varchar(45),
     EPS varchar(45),
