@@ -75,7 +75,7 @@ CREATE TABLE Empresa(
 CREATE TABLE Contrato(
     idContrato int,
     NIT  varchar(45),
-    Fecha_Contratación varchar(45),
+    Fecha_Contratacion varchar(45),
     Cargo varchar(45),
     Salario varchar(45),
     Fecha_Terminacion varchar(45),
