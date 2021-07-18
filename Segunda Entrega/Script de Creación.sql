@@ -14,6 +14,7 @@ drop table if exists Proveedor;
 drop table if exists Insumo;
 drop table if exists Maquinaria_y_Equipo;
 drop table if exists Empresa;
+drop table if exists Cargos;
 drop table if exists Contrato;
 drop table if exists Empleado;
 drop table if exists Sucursal;
@@ -31,7 +32,7 @@ CREATE TABLE Proveedor(
     Persona_de_contacto varchar(45), 
     Telefono_de_contacto varchar(45), 
     Categoria varchar(45),
-    Terminos_de_Negociación longtext,
+    Terminos_de_Negociacion longtext,
     email varchar(45),
     PRIMARY KEY (NIT)
 );
@@ -49,8 +50,8 @@ CREATE TABLE Insumo(
     PRIMARY KEY (idInsumo)
 );
 
-CREATE TABLE Maquinaría_y_Equipo(
-    idMaquinaría_y_Equipo int,
+CREATE TABLE Maquinaria_y_Equipo(
+    idMaquinaria_y_Equipo int,
     Nombre  varchar(45),
     Cantidad int(3),
     Fecha_de_compra varchar(45), 
@@ -60,7 +61,7 @@ CREATE TABLE Maquinaría_y_Equipo(
     IVA decimal,
     Estado_de_pago varchar(45),
     Cantidad_a_pagar decimal,
-    PRIMARY KEY (idMaquinaría_y_Equipo)
+    PRIMARY KEY (idMaquinaria_y_Equipo)
 );
 
 CREATE TABLE Empresa(
@@ -72,15 +73,22 @@ CREATE TABLE Empresa(
     PRIMARY KEY (NIT)
 );
 
+CREATE TABLE Cargos(
+    idCargo int,
+    Cargo varchar(45),
+    PRIMARY KEY (idCargo)
+);
+
 CREATE TABLE Contrato(
     idContrato int,
     NIT  varchar(45),
+    idCargo int,
     Fecha_Contratacion varchar(45),
-    Cargo varchar(45),
     Salario varchar(45),
     Fecha_Terminacion varchar(45),
-    PRIMARY KEY (idContrato,NIT),
-    FOREIGN KEY (NIT) REFERENCES Empresa(NIT)
+    PRIMARY KEY (idContrato,NIT,idCargo),
+    FOREIGN KEY (NIT) REFERENCES Empresa(NIT),
+    FOREIGN KEY (idCargo) REFERENCES Cargos(idCargo)
 );
 
 
@@ -126,7 +134,7 @@ CREATE TABLE Producto(
     Fecha_de_produccion varchar(45),
     Categoria varchar(45),
     Fecha_de_caducidad varchar(45),
-    Punto_de_fabricación int,
+    Punto_de_fabricacion int,
     PRIMARY KEY (idProducto)
 );
 CREATE TABLE Cliente(
@@ -159,4 +167,3 @@ CREATE TABLE Domicilio(
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
     FOREIGN KEY (idVenta) REFERENCES Venta(idVenta)
 );
-
