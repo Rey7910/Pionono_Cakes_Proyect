@@ -26,7 +26,7 @@ drop table if exists Domicilio;
 
 -- Creación de las tablas
 CREATE TABLE Proveedor(
-    Nombre varchar(45),
+	Nombre varchar(45),
     NIT	varchar(45),
     Razon_Social  varchar(45),
     Ubicacion varchar(45),
