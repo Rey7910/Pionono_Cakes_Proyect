@@ -26,8 +26,8 @@ drop table if exists Domicilio;
 
 -- Creación de las tablas
 CREATE TABLE Proveedor(
-	Nombre varchar(45),
     NIT	varchar(45),
+    Nombre varchar(45),
     Razon_Social  varchar(45),
     Ubicacion varchar(45),
     Persona_de_contacto varchar(45), 
@@ -38,32 +38,6 @@ CREATE TABLE Proveedor(
     PRIMARY KEY (NIT)
 );
 
-CREATE TABLE Insumo(
-    idInsumo int,
-    Nombre  varchar(45),
-    Cantidad int(3),
-    Unidad_de_Medida varchar(2), 
-    Precio_por_unidad_de_medida decimal, 
-    Marca varchar(45),
-    Estado_de_pago varchar(10),
-    Cantidad_a_pagar decimal,
-    IVA decimal,
-    PRIMARY KEY (idInsumo)
-);
-
-CREATE TABLE Maquinaria_y_Equipo(
-    idMaquinaria_y_Equipo int,
-    Nombre  varchar(45),
-    Cantidad int(3),
-    Fecha_de_compra varchar(45), 
-    Precio decimal, 
-    Marca varchar(45),
-    Garantia varchar(45),
-    IVA decimal,
-    Estado_de_pago varchar(45),
-    Cantidad_a_pagar decimal,
-    PRIMARY KEY (idMaquinaria_y_Equipo)
-);
 
 CREATE TABLE Empresa(
     NIT varchar(45),
@@ -75,26 +49,25 @@ CREATE TABLE Empresa(
 );
 
 CREATE TABLE Cargos(
-    idCargo int,
-    Cargo varchar(45),
+    idCargo int auto_increment not null,
+    Nombre varchar(45) not null,
     PRIMARY KEY (idCargo)
 );
 
 CREATE TABLE Contrato(
-    idContrato int,
+    idContrato int auto_increment,
     NIT  varchar(45),
     idCargo int,
-    Fecha_Contratacion varchar(45),
-    Salario varchar(45),
+    Fecha_Contratacion varchar(45) not null,
+    Salario varchar(45) not null,
     Fecha_Terminacion varchar(45),
     PRIMARY KEY (idContrato,NIT,idCargo),
     FOREIGN KEY (NIT) REFERENCES Empresa(NIT),
     FOREIGN KEY (idCargo) REFERENCES Cargos(idCargo)
 );
-
-
+-- insert into Contrato values ("2344",2,"01-02-2021","2300","02-03-2021");
 CREATE TABLE Empleado(
-    idEmpleado int,
+    idEmpleado int auto_increment not null,
     idContrato  int,
     Nombre varchar(45),
     Apellido varchar(45),
@@ -108,45 +81,84 @@ CREATE TABLE Empleado(
 );
 
 CREATE TABLE Sucursal(
-    idSucursal int,
+    idSucursal int auto_increment not null,
     NIT varchar(45),
-    idEmpleado int,
     Categoria varchar(45),
     Nombre varchar(45),
     Ubicacion varchar(45),
     Ciudad varchar(45),
-    Inventario varchar(45),
-    Administrador varchar(45),
-    PRIMARY KEY (idSucursal,NIT,idEmpleado),
+    Administrador int,
+    PRIMARY KEY (idSucursal,NIT,Administrador),
     FOREIGN KEY (NIT) REFERENCES Empresa(NIT),
+    FOREIGN KEY (Administrador) REFERENCES Empleado(idEmpleado)
+);
+
+CREATE TABLE Vinculos(
+	idSucursal int,
+    idEmpleado int,
+    PRIMARY KEY (idSucursal, idEmpleado),
+    FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal),
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
 );
 
 CREATE TABLE Inventario(
-    idInventario varchar(45),
+    idInventario int auto_increment not null,
     idSucursal int,
     PRIMARY KEY (idInventario,idSucursal),
     FOREIGN KEY (idSucursal) REFERENCES Sucursal(idSucursal)
 );
+
+CREATE TABLE Maquinaria_y_Equipo(
+    idMaquinaria_y_Equipo int auto_increment not null,
+    idInventario int,
+    Nombre  varchar(45),
+    Fecha_de_compra varchar(45), 
+    Precio decimal, 
+    Marca varchar(45),
+    Garantia varchar(45),
+    IVA decimal,
+    Estado_de_pago varchar(45),
+    Cantidad_a_pagar decimal,
+    PRIMARY KEY (idMaquinaria_y_Equipo,idInventario),
+    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario)
+);
+
+CREATE TABLE Insumo(
+	idInsumo  int auto_increment not null,
+    idInventario int,
+    Nombre  varchar(45),
+    Cantidad int(3),
+    Unidad_de_Medida varchar(2), 
+    Precio_por_unidad_de_medida decimal, 
+    Marca varchar(45),
+    Estado_de_pago varchar(10),
+    Cantidad_a_pagar decimal,
+    IVA decimal,
+    PRIMARY KEY (idInsumo,idInventario),
+    FOREIGN KEY (idInventario) REFERENCES Inventario(idInventario)
+);
+
 CREATE TABLE Producto(
-    idProducto int,
+    idProducto int auto_increment not null,
     Nombre varchar(45),
     Precio decimal,
     Fecha_de_produccion varchar(45),
     Categoria varchar(45),
     Fecha_de_caducidad varchar(45),
     Punto_de_fabricacion int,
-    PRIMARY KEY (idProducto)
+    PRIMARY KEY (idProducto,Punto_de_fabricacion),
+    FOREIGN KEY (Punto_de_fabricacion) REFERENCES Sucursal(idSucursal)
+    
 );
 CREATE TABLE Cliente(
-    idCliente int,
+    idCliente int auto_increment not null,
     Nombre varchar(45),
     Apellido varchar(45),
     Perfil varchar(45),
     PRIMARY KEY (idCliente)
 );
 CREATE TABLE Venta(
-    idVenta int,
+    idVenta int auto_increment not null,
     idEmpleado int,
     idCliente int,
     idSucursal int,
@@ -158,7 +170,7 @@ CREATE TABLE Venta(
 );
 
 CREATE TABLE Domicilio(
-    idDomicilio int,
+    idDomicilio int auto_increment not null,
     idCliente int,
     idEmpleado int,
     idVenta int,
