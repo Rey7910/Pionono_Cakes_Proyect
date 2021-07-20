@@ -23,6 +23,10 @@ drop table if exists Producto;
 drop table if exists Cliente;
 drop table if exists Venta;
 drop table if exists Domicilio;
+drop table if exists venta_productos;
+drop table if exists venta_insumos;
+drop table if exists adquisicion_insumos;
+drop table if exists adquisicion_maquinaria_y_equipo;
 
 -- Creación de las tablas
 CREATE TABLE Proveedor(
@@ -179,6 +183,38 @@ CREATE TABLE Domicilio(
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
     FOREIGN KEY (idVenta) REFERENCES Venta(idVenta)
+);
+
+CREATE TABLE Venta_Productos(
+    idVenta int,
+    idProducto int,
+    Cantidad int,
+    PRIMARY KEY (idVenta,idProducto),
+    FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
+
+CREATE TABLE Venta_insumos(
+    idVenta int,
+    idInsumo int,
+    Cantidad int,
+    PRIMARY KEY (idVenta,idInsumo),
+    FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
+    FOREIGN KEY (idInsumo) REFERENCES Insumo(idInsumo)
+);
+CREATE TABLE Adquisicion_insumos(
+    NIT varchar(45),
+    idInsumo int,
+    PRIMARY KEY (NIT,idInsumo),
+    FOREIGN KEY (NIT) REFERENCES Proveedor(NIT),
+    FOREIGN KEY (idInsumo) REFERENCES Insumo(idInsumo)
+);
+CREATE TABLE adquisicion_maquinaria_y_equipo(
+    NIT varchar(45),
+    idmaquinaria_y_equipo int,
+    PRIMARY KEY (NIT,idmaquinaria_y_equipo),
+    FOREIGN KEY (NIT) REFERENCES Proveedor(NIT),
+    FOREIGN KEY (idmaquinaria_y_equipo) REFERENCES maquinaria_y_equipo(idmaquinaria_y_equipo)
 );
 
 -- Inserción de datos en las respectivas tablas
