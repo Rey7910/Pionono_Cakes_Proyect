@@ -180,3 +180,12 @@ CREATE TABLE Domicilio(
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
     FOREIGN KEY (idVenta) REFERENCES Venta(idVenta)
 );
+
+-- Inserción de datos en las respectivas tablas
+
+-- Tabla 'Cargos'
+insert into Cargos(Nombre) values ("Jefe");
+insert into Cargos(Nombre) values ("Administrador");
+insert into Cargos(Nombre) values ("Funcionario");
+insert into Cargos(Nombre) values ("Domiciliario");
+select * from Cargos;
