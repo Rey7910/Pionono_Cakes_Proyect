@@ -179,7 +179,7 @@ CREATE TABLE Domicilio(
     idCliente int,
     idEmpleado int,
     idVenta int,
-    Dirección_entrega varchar(45),
+    Direccion_entrega varchar(45),
     PRIMARY KEY (idDomicilio,idCliente,idEmpleado,idVenta),
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
