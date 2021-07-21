@@ -135,6 +135,7 @@ CREATE TABLE Insumo(
     Unidad_de_Medida varchar(2), 
     Precio_por_unidad_de_medida decimal, 
     Marca varchar(45),
+    fecha_de_compra varchar(45),
     Estado_de_pago varchar(10),
     Cantidad_a_pagar decimal,
     IVA decimal,
