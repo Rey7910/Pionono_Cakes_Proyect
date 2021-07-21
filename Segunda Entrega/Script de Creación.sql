@@ -188,7 +188,6 @@ CREATE TABLE Domicilio(
 CREATE TABLE Venta_Productos(
     idVenta int,
     idProducto int,
-    Cantidad int,
     PRIMARY KEY (idVenta,idProducto),
     FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
     FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
@@ -197,7 +196,6 @@ CREATE TABLE Venta_Productos(
 CREATE TABLE Venta_insumos(
     idVenta int,
     idInsumo int,
-    Cantidad int,
     PRIMARY KEY (idVenta,idInsumo),
     FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
     FOREIGN KEY (idInsumo) REFERENCES Insumo(idInsumo)
