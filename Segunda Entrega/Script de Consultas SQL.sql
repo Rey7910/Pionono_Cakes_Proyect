@@ -42,7 +42,7 @@ from empleado, sucursal, contrato, cargos where cargos.nombre = "Administrador"
 and empleado.idempleado = sucursal.administrador and contrato.idcargo = cargos.idcargo
 and empleado.idcontrato = contrato.idcontrato;
 
--- f) Domiciliarios de la microempresa y sus respectivos teléfonos
+-- f) Domiciliarios y sus respectivos teléfonos
 
 select empleado.nombre, empleado.apellido, empleado.telefono 
 from empleado, contrato, cargos where cargos.nombre = "Domiciliario"
@@ -54,36 +54,75 @@ select maquinaria_y_equipo.nombre , maquinaria_y_equipo.marca , sucursal.nombre 
 from maquinaria_y_equipo, sucursal, inventario where maquinaria_y_equipo.idinventario=inventario.idinventario
 and inventario.idsucursal = sucursal.idsucursal;
 
--- h)
--- i)
--- j) 
+-- h) Insumos adquiridos con su respectivo proveedor y fecha de compra
 
+select insumo.nombre, proveedor.nombre as provedor, insumo.fecha_de_compra 
+from insumo, proveedor, adquisicion_insumos
+where insumo.idinsumo=adquisicion_insumos.idinsumo and proveedor.NIT = adquisicion_insumos.NIT;
 
--- 2)  Agregaciones
+-- i)Clientes con sus perfiles y sus respectivas direcciones
 
--- a)
--- b)
--- c)
--- d)
--- e)
--- f)
--- g)
--- h)
--- i)
--- j)
+select cliente.nombre, cliente.apellido, cliente.perfil, domicilio.direccion_entrega 
+from cliente, domicilio where cliente.idcliente = domicilio.idcliente;
 
--- 3) Agrupaciones
+-- j) Funcionarios de la empresa con su dirección y EPS
 
--- a)
--- b)
--- c)
--- d)
--- e)
--- f)
--- g)
--- h)
--- i)
--- j)
+select empleado.nombre, empleado.apellido, empleado.direccion, empleado.EPS
+from empleado, contrato, cargos where cargos.nombre = "Funcionario"
+and cargos.idCargo = contrato.idcargo and empleado.idcontrato = contrato.idcontrato;
+
+-- 2)  Agregaciones y Agrupaciones
+
+-- a) Número de empleados por cada sucursal
+
+select sucursal.nombre, count(vinculos.idempleado) from sucursal, vinculos 
+where vinculos.idsucursal = sucursal.idsucursal group by sucursal.nombre;
+
+-- b) Promedio salarial de los empleados por sucursal
+
+select sucursal.nombre, avg(contrato.salario) from sucursal, vinculos, contrato, empleado
+where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
+and vinculos.idempleado = empleado.idempleado group by sucursal.nombre;
+
+-- c) Cantidad de maquinaría presente en cada sucursal
+
+select sucursal.nombre, count(maquinaria_y_equipo.idmaquinaria_y_equipo) from sucursal, inventario, 
+maquinaria_y_equipo where maquinaria_y_equipo.idinventario = inventario.idinventario 
+and inventario.idsucursal = sucursal.idsucursal group by sucursal.nombre;
+
+-- d) Deuda de la microempresa referente a insumos 
+
+select sum(precio_por_unidad_de_medida*unidad_de_medida*cantidad) as deuda_insumos 
+from insumo where Estado_de_pago = "Pendiente";
+
+-- e) Deuda de la microempresa referente a maquinaría
+
+select sum(Cantidad_a_pagar) as deuda_maquinaria from maquinaria_y_equipo 
+where Estado_de_pago = "Pendiente";
+
+-- f) Cantidad de sucursales vinculadas a cada empleado 
+
+select empleado.nombre, empleado.apellido, sum(vinculos.idsucursal) 
+from empleado, vinculos where empleado.idempleado = vinculos.idempleado 
+group by empleado.nombre and empleado.apellido;
+
+-- g) Cantidad de ventas por cada sucursal
+
+select sucursal.nombre, sum(venta.idventa) from venta,sucursal
+where sucursal.idsucursal = venta.idsucursal group by sucursal.nombre;
+
+-- h) Cantidad de productos disponibles por categoria
+
+select categoria, sum(idproducto) from producto group by categoria; 
+
+-- i) Salario promedio de todos los empleados
+
+select avg(salario) from contrato;
+
+-- j) Promedio salarial de cada uno de los cargos
+
+select cargos.nombre, avg(contrato.salario) from cargos, contrato
+where cargos.idcargo = contrato.idcargo group by cargos.nombre;
 
 -- 4) IN
 
