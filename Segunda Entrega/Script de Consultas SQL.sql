@@ -104,11 +104,11 @@ where Estado_de_pago = "Pendiente";
 
 select empleado.nombre, empleado.apellido, sum(vinculos.idsucursal) 
 from empleado, vinculos where empleado.idempleado = vinculos.idempleado 
-group by empleado.nombre and empleado.apellido;
+group by empleado.nombre ;
 
 -- g) Cantidad de ventas por cada sucursal
 
-select sucursal.nombre as sucursal, sum(venta.idventa) from venta,sucursal
+select sucursal.nombre as sucursal, count(venta.idventa) from venta,sucursal
 where sucursal.idsucursal = venta.idsucursal group by sucursal.nombre;
 
 -- h) Cantidad de productos disponibles por categoria
@@ -118,7 +118,7 @@ select categoria, sum(idproducto) from producto group by categoria;
 -- i) Salario promedio de todos los empleados
 
 select avg(salario) from contrato;
-
+select salario from contrato;
 -- j) Promedio salarial de cada uno de los cargos
 
 select cargos.nombre as cargo, avg(contrato.salario) from cargos, contrato
@@ -132,12 +132,13 @@ select maquinaria_y_equipo.nombre, maquinaria_y_equipo.marca from maquinaria_y_e
 sucursal where maquinaria_y_equipo.idinventario=inventario.idinventario and inventario.idsucursal=sucursal.idsucursal
 and ciudad in ('Sopó','Bogotá');
 
--- b) Empleados cuyas EPS son Sanitas, Compensar o Medimas
+-- b) Empleados cuyas EPS son Colsanitas, Compensar o Cafesalud
 
-select nombre, apellido from empleado where EPS in ('Sanitas','Compenar','Medimas');
+select nombre, apellido from empleado where EPS in ('Colsanitas','Compensar','Cafesalud');
+select * from empleado;
 
 -- c) Proveedores ubicados en Bogotá, Zipaquirá y Fusagasugá
-select nombre as proveedores from proveedor where ubicacion in ('Bogotá','Fusagasugá','Zipaquirá');
+select nombre as proveedores from proveedor where ubicacion like '%Bogotá%' or '%Fusagasugá%' or '%Zipaquirá%' ; 
 
 -- d) Ventas realizadas entre el 10 de junio al 20 de junio de 2021
 
@@ -155,15 +156,15 @@ in (
 '18-06-2021',
 '19-06-2021',
 '20-06-2021'
-)
+);
 
 -- 5) HAVING
 
--- a) Promedio salarial de cada sucursal cuando son menores a 10000
+-- a) Promedio salarial de cada sucursal cuando son menores a 2500000
 
 select sucursal.nombre as sucursal, avg(contrato.salario) as promedio from sucursal, vinculos, contrato, empleado
 where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
-and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having promedio < 10000;
+and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having promedio < 2500000;
 
 -- b) Suma de salarios de las sucursales que son mayores a 30000000
 
