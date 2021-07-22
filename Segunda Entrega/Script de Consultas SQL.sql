@@ -75,18 +75,18 @@ and cargos.idCargo = contrato.idcargo and empleado.idcontrato = contrato.idcontr
 
 -- a) Número de empleados por cada sucursal
 
-select sucursal.nombre, count(vinculos.idempleado) from sucursal, vinculos 
+select sucursal.nombre as sucursal, count(vinculos.idempleado) from sucursal, vinculos 
 where vinculos.idsucursal = sucursal.idsucursal group by sucursal.nombre;
 
 -- b) Promedio salarial de los empleados por sucursal
 
-select sucursal.nombre, avg(contrato.salario) from sucursal, vinculos, contrato, empleado
+select sucursal.nombre as sucursal, avg(contrato.salario) from sucursal, vinculos, contrato, empleado
 where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
 and vinculos.idempleado = empleado.idempleado group by sucursal.nombre;
 
 -- c) Cantidad de maquinaría presente en cada sucursal
 
-select sucursal.nombre, count(maquinaria_y_equipo.idmaquinaria_y_equipo) from sucursal, inventario, 
+select sucursal.nombre as sucursal, count(maquinaria_y_equipo.idmaquinaria_y_equipo) from sucursal, inventario, 
 maquinaria_y_equipo where maquinaria_y_equipo.idinventario = inventario.idinventario 
 and inventario.idsucursal = sucursal.idsucursal group by sucursal.nombre;
 
@@ -108,7 +108,7 @@ group by empleado.nombre and empleado.apellido;
 
 -- g) Cantidad de ventas por cada sucursal
 
-select sucursal.nombre, sum(venta.idventa) from venta,sucursal
+select sucursal.nombre as sucursal, sum(venta.idventa) from venta,sucursal
 where sucursal.idsucursal = venta.idsucursal group by sucursal.nombre;
 
 -- h) Cantidad de productos disponibles por categoria
@@ -121,12 +121,12 @@ select avg(salario) from contrato;
 
 -- j) Promedio salarial de cada uno de los cargos
 
-select cargos.nombre, avg(contrato.salario) from cargos, contrato
+select cargos.nombre as cargo, avg(contrato.salario) from cargos, contrato
 where cargos.idcargo = contrato.idcargo group by cargos.nombre;
 
 -- 4) IN
 
--- a)
+-- a) 
 -- b)
 -- c)
 -- d)
@@ -139,13 +139,20 @@ where cargos.idcargo = contrato.idcargo group by cargos.nombre;
 
 -- 5) HAVING
 
--- a)
--- b)
--- c)
--- d)
--- e)
--- f)
--- g)
--- h)
--- i)
--- j)
+-- a) Promedio salarial de cada sucursal cuando son menores a 10000
+
+select sucursal.nombre as sucursal, avg(contrato.salario) as promedio from sucursal, vinculos, contrato, empleado
+where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
+and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having promedio < 10000;
+
+-- b) Suma de salarios de las sucursales que son mayores a 30000000
+
+select sucursal.nombre as sucursal, sum(contrato.salario) as total_salarios from sucursal, vinculos, contrato, empleado
+where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
+and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having total_salarios > 30000000;
+
+-- d) Cantidad de maquinaria sin pagar por sucursal cuando es mayor a 5
+
+select sucursal.nombre as sucursal, sum(maquinaria_y_equipo.idmaquinaria_y_equipo) as cantidad from maquinaria_y_equipo, sucursal,
+inventario where maquinaria_y_equipo.idinventario = inventario.idinventario and sucursal.idsucursal = inventario.idsucursal
+group by sucursal.nombre having cantidad > 5;
