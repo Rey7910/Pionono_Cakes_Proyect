@@ -29,46 +29,46 @@ venta.fecha   venta_productos
 
 -- d)Ventas de cada empleado en su respectiva sucursal y fecha
 
-select empleado.nombre, empleado.apellido, sucursal.nombre as sucursal,
-venta.fecha from empleado, producto, venta, venta_productos, sucursal
-where venta_productos.idventa=venta.idventa and venta.idempleado=empleado.idempleado
-and producto.idProducto=venta_productos.idProducto and sucursal.idsucursal = venta.idsucursal;
+π empleado.nombre, empleado.apellido, sucursal.nombre as sucursal,
+venta.fecha (σ venta_productos.idventa=venta.idventa ∧ venta.idempleado=empleado.idempleado ∧ 
+producto.idProducto=venta_productos.idProducto ∧ sucursal.idsucursal = venta.idsucursal
+(empleado ⨝ producto ⨝ venta ⨝ venta_productos ⨝ sucursal))
 
 -- e) Administradores de las sucursales de la microempresa
 
-select empleado.nombre, empleado.apellido, sucursal.nombre as sucursal
-from empleado, sucursal, contrato, cargos where cargos.nombre = "Administrador"
-and empleado.idempleado = sucursal.administrador and contrato.idcargo = cargos.idcargo
-and empleado.idcontrato = contrato.idcontrato;
+π empleado.nombre, empleado.apellido, sucursal.nombre 
+(σ cargos.nombre = "Administrador"
+∧ empleado.idempleado = sucursal.administrador ∧ contrato.idcargo = cargos.idcargo
+∧ empleado.idcontrato = contrato.idcontrato
+(empleado ⨝ sucursal ⨝ contrato ⨝ cargos))
 
 -- f) Domiciliarios y sus respectivos teléfonos
 
-select empleado.nombre, empleado.apellido, empleado.telefono 
-from empleado, contrato, cargos where cargos.nombre = "Domiciliario"
-and cargos.idCargo = contrato.idcargo and empleado.idcontrato = contrato.idcontrato;
+π empleado.nombre, empleado.apellido, empleado.telefono 
+ (σ cargos.nombre = "Domiciliario"
+∧ cargos.idCargo = contrato.idcargo ∧ empleado.idcontrato = contrato.idcontrato
+( empleado ⨝ contrato ⨝ cargos))
 
 -- g) Maquinaría, su marca y su respectiva sucursal
 
-select maquinaria_y_equipo.nombre , maquinaria_y_equipo.marca , sucursal.nombre as sucursal
-from maquinaria_y_equipo, sucursal, inventario where maquinaria_y_equipo.idinventario=inventario.idinventario
-and inventario.idsucursal = sucursal.idsucursal;
+π maquinaria_y_equipo.nombre , maquinaria_y_equipo.marca , sucursal.nombre 
+(σ maquinaria_y_equipo.idinventario=inventario.idinventario
+∧ inventario.idsucursal = sucursal.idsucursal(maquinaria_y_equipo ⨝ sucursal ⨝ inventario))
 
 -- h) Insumos adquiridos con su respectivo proveedor y fecha de compra
 
-select insumo.nombre, proveedor.nombre as provedor, insumo.fecha_de_compra 
-from insumo, proveedor, adquisicion_insumos
-where insumo.idinsumo=adquisicion_insumos.idinsumo and proveedor.NIT = adquisicion_insumos.NIT;
+π insumo.nombre, proveedor.nombre as provedor, insumo.fecha_de_compra 
+(σ insumo.idinsumo=adquisicion_insumos.idinsumo ∧ proveedor.NIT = adquisicion_insumos.NIT(insumo ⨝ proveedor ⨝ adquisicion_insumos))
 
 -- i)Clientes con sus perfiles y sus respectivas direcciones
 
-select cliente.nombre, cliente.apellido, cliente.perfil, domicilio.direccion_entrega 
-from cliente, domicilio where cliente.idcliente = domicilio.idcliente;
+π cliente.nombre, cliente.apellido, cliente.perfil, domicilio.direccion_entrega 
+(σ cliente.idcliente = domicilio.idcliente (cliente ⨝ domicilio))
 
 -- j) Funcionarios de la empresa con su dirección y EPS
 
-select empleado.nombre, empleado.apellido, empleado.direccion, empleado.EPS
-from empleado, contrato, cargos where cargos.nombre = "Funcionario"
-and cargos.idCargo = contrato.idcargo and empleado.idcontrato = contrato.idcontrato;
+π empleado.nombre, empleado.apellido, empleado.direccion, empleado.EPS
+(σ cargos.nombre = "Funcionario" ∧ cargos.idCargo = contrato.idcargo ∧ empleado.idcontrato = contrato.idcontrato (empleado ⨝ contrato ⨝ cargos))
 
 -- 2)  Agregaciones y Agrupaciones
 
