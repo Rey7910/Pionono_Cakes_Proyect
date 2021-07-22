@@ -126,55 +126,55 @@ and inventario.idsucursal = sucursal.idsucursal
 γ cargos.nombre → cargo; avg(contrato.salario) 
 (σ cargos.idcargo = contrato.idcargo (cargos ⨯ contrato))
 
--- 4) IN
+-- 4) IN (Para realizar instrucciones en Álgebra Relacional similares a IN en SQL usamos conjunciones '∨')
 
 -- a) Maquinaria presente en Sopó y bogotá
 
-select maquinaria_y_equipo.nombre, maquinaria_y_equipo.marca from maquinaria_y_equipo, inventario,
-sucursal where maquinaria_y_equipo.idinventario=inventario.idinventario and inventario.idsucursal=sucursal.idsucursal
-and ciudad in ('Sopó','Bogotá');
+π maquinaria_y_equipo.nombre, maquinaria_y_equipo.marca 
+(σ maquinaria_y_equipo.idinventario=inventario.idinventario ∧ inventario.idsucursal=sucursal.idsucursal
+∧ ciudad = 'Sopó' ∨ ciudad = 'Bogotá'(maquinaria_y_equipo ⨯ inventario ⨯
+sucursal))
 
 -- b) Empleados cuyas EPS son Sanitas, Compensar o Medimas
 
-select nombre, apellido from empleado where EPS in ('Sanitas','Compenar','Medimas');
+π nombre, apellido (σ EPS = 'Sanitas' ∨ EPS='Compensar' ∨ EPS='Medimas'(empleado));
 
 -- c) Proveedores ubicados en Bogotá, Zipaquirá y Fusagasugá
-select nombre as proveedores from proveedor where ubicacion in ('Bogotá','Fusagasugá','Zipaquirá');
+π nombre -> proveedores  (σ ubicacion= 'Bogotá' ∨ ubicacion= 'Fusagasugá' ∨ ubicacion = 'Zipaquirá'(proveedor))
 
 -- d) Ventas realizadas entre el 10 de junio al 20 de junio de 2021
 
-select count(idVenta) from venta 
-where fecha 
-in (
-'10-06-2021',
-'11-06-2021',
-'12-06-2021',
-'13-06-2021',
-'14-06-2021',
-'15-06-2021',
-'16-06-2021',
-'17-06-2021',
-'18-06-2021',
-'19-06-2021',
-'20-06-2021'
-)
+γ count(idVenta); 
+(σ 
+fecha ='10-06-2021'∨
+fecha ='11-06-2021'∨
+fecha ='12-06-2021'∨
+fecha ='13-06-2021'∨
+fecha ='14-06-2021'∨
+fecha ='15-06-2021'∨
+fecha ='16-06-2021'∨
+fecha ='17-06-2021'∨
+fecha ='18-06-2021'∨
+fecha ='19-06-2021'∨
+fecha ='20-06-2021'
+(venta))
 
 -- 5) HAVING
 
 -- a) Promedio salarial de cada sucursal cuando son menores a 10000
 
-select sucursal.nombre as sucursal, avg(contrato.salario) as promedio from sucursal, vinculos, contrato, empleado
-where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
-and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having promedio < 10000;
+γ sucursal.nombre → sucursal; avg(contrato.salario) → promedio
+(σ sucursal.idsucursal = vinculos.idsucursal ∧ contrato.idcontrato = empleado.idempleado ∧ vinculos.idempleado = empleado.idempleado 
+∧ promedio < 10000 (sucursal ⨯ vinculos ⨯ contrato ⨯ empleado))
 
 -- b) Suma de salarios de las sucursales que son mayores a 30000000
 
-select sucursal.nombre as sucursal, sum(contrato.salario) as total_salarios from sucursal, vinculos, contrato, empleado
-where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
-and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having total_salarios > 30000000;
+γ sucursal.nombre → sucursal; sum(contrato.salario) → total_salarios 
+(σ sucursal.idsucursal = vinculos.idsucursal ∧ contrato.idcontrato = empleado.idempleado 
+∧ vinculos.idempleado = empleado.idempleado ∧ total_salarios > 30000000 (sucursal ⨯ vinculos ⨯ contrato ⨯ empleado))
 
 -- c) Cantidad de maquinaria sin pagar por sucursal cuando es mayor a 5
 
-select sucursal.nombre as sucursal, sum(maquinaria_y_equipo.idmaquinaria_y_equipo) as cantidad from maquinaria_y_equipo, sucursal,
-inventario where maquinaria_y_equipo.idinventario = inventario.idinventario and sucursal.idsucursal = inventario.idsucursal
-group by sucursal.nombre having cantidad > 5;
+γ sucursal.nombre → sucursal;
+sum(maquinaria_y_equipo.idmaquinaria_y_equipo) → cantidad (σ maquinaria_y_equipo.idinventario = inventario.idinventario 
+∧ sucursal.idsucursal = inventario.idsucursal ∧ cantidad > 5 (maquinaria_y_equipo ∧ sucursal ∧ inventario))
