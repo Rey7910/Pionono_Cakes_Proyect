@@ -94,37 +94,37 @@ and inventario.idsucursal = sucursal.idsucursal
 
 -- d) Deuda de la microempresa referente a insumos 
 
-select sum(precio_por_unidad_de_medida*unidad_de_medida*cantidad) as deuda_insumos 
-from insumo where Estado_de_pago = "Pendiente";
+γ sum(precio_por_unidad_de_medida*unidad_de_medida*cantidad) → deuda_insumos;
+(σ Estado_de_pago = "Pendiente"(insumo))
 
 -- e) Deuda de la microempresa referente a maquinaría
 
-select sum(Cantidad_a_pagar) as deuda_maquinaria from maquinaria_y_equipo 
-where Estado_de_pago = "Pendiente";
+γ sum(Cantidad_a_pagar) → deuda_maquinaria;
+(σ Estado_de_pago = "Pendiente"(maquinaria_y_equipo));
 
 -- f) Cantidad de sucursales vinculadas a cada empleado 
 
-select empleado.nombre, empleado.apellido, sum(vinculos.idsucursal) 
-from empleado, vinculos where empleado.idempleado = vinculos.idempleado 
-group by empleado.nombre and empleado.apellido;
+γ empleado.nombre, empleado.apellido; sum(vinculos.idsucursal) 
+(σ empleado.idempleado = vinculos.idempleado 
+(empleado ⨯ vinculos));
 
 -- g) Cantidad de ventas por cada sucursal
 
-select sucursal.nombre as sucursal, sum(venta.idventa) from venta,sucursal
-where sucursal.idsucursal = venta.idsucursal group by sucursal.nombre;
+γ sucursal.nombre → sucursal; sum(venta.idventa) 
+(σ sucursal.idsucursal = venta.idsucursal(venta ⨯ sucursal))
 
 -- h) Cantidad de productos disponibles por categoria
 
-select categoria, sum(idproducto) from producto group by categoria; 
+γ categoria; sum(idproducto) σ(producto)
 
 -- i) Salario promedio de todos los empleados
 
-select avg(salario) from contrato;
+γ avg(salario); σ (contrato)
 
 -- j) Promedio salarial de cada uno de los cargos
 
-select cargos.nombre as cargo, avg(contrato.salario) from cargos, contrato
-where cargos.idcargo = contrato.idcargo group by cargos.nombre;
+γ cargos.nombre → cargo; avg(contrato.salario) 
+(σ cargos.idcargo = contrato.idcargo (cargos ⨯ contrato))
 
 -- 4) IN
 
