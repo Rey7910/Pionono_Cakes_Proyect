@@ -135,9 +135,9 @@ and inventario.idsucursal = sucursal.idsucursal
 ∧ ciudad = 'Sopó' ∨ ciudad = 'Bogotá'(maquinaria_y_equipo ⨯ inventario ⨯
 sucursal))
 
--- b) Empleados cuyas EPS son Sanitas, Compensar o Medimas
+-- b) Empleados cuyas EPS son Colsanitas, Compensar o Cafesalud
 
-π nombre, apellido (σ EPS = 'Sanitas' ∨ EPS='Compensar' ∨ EPS='Medimas'(empleado));
+π nombre, apellido (σ EPS = 'Colsanitas' ∨ EPS='Compensar' ∨ EPS='Cafesalud'(empleado));
 
 -- c) Proveedores ubicados en Bogotá, Zipaquirá y Fusagasugá
 π nombre -> proveedores  (σ ubicacion= 'Bogotá' ∨ ubicacion= 'Fusagasugá' ∨ ubicacion = 'Zipaquirá'(proveedor))
@@ -161,11 +161,11 @@ fecha ='20-06-2021'
 
 -- 5) HAVING
 
--- a) Promedio salarial de cada sucursal cuando son menores a 10000
+-- a) Promedio salarial de cada sucursal cuando son menores a 2500000
 
 γ sucursal.nombre → sucursal; avg(contrato.salario) → promedio
 (σ sucursal.idsucursal = vinculos.idsucursal ∧ contrato.idcontrato = empleado.idempleado ∧ vinculos.idempleado = empleado.idempleado 
-∧ promedio < 10000 (sucursal ⨯ vinculos ⨯ contrato ⨯ empleado))
+∧ promedio < 2500000 (sucursal ⨯ vinculos ⨯ contrato ⨯ empleado))
 
 -- b) Suma de salarios de las sucursales que son mayores a 30000000
 
