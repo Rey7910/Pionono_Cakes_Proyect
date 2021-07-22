@@ -126,16 +126,36 @@ where cargos.idcargo = contrato.idcargo group by cargos.nombre;
 
 -- 4) IN
 
--- a) 
--- b)
--- c)
--- d)
--- e)
--- f)
--- g)
--- h)
--- i)
--- j)
+-- a) Maquinaria presente en Sopó y bogotá
+
+select maquinaria_y_equipo.nombre, maquinaria_y_equipo.marca from maquinaria_y_equipo, inventario,
+sucursal where maquinaria_y_equipo.idinventario=inventario.idinventario and inventario.idsucursal=sucursal.idsucursal
+and ciudad in ('Sopó','Bogotá');
+
+-- b) Empleados cuyas EPS son Sanitas, Compensar o Medimas
+
+select nombre, apellido from empleado where EPS in ('Sanitas','Compenar','Medimas');
+
+-- c) Proveedores ubicados en Bogotá, Zipaquirá y Fusagasugá
+select nombre as proveedores from proveedor where ubicacion in ('Bogotá','Fusagasugá','Zipaquirá');
+
+-- d) Ventas realizadas entre el 10 de junio al 20 de junio de 2021
+
+select count(idVenta) from venta 
+where fecha 
+in (
+'10-06-2021',
+'11-06-2021',
+'12-06-2021',
+'13-06-2021',
+'14-06-2021',
+'15-06-2021',
+'16-06-2021',
+'17-06-2021',
+'18-06-2021',
+'19-06-2021',
+'20-06-2021'
+)
 
 -- 5) HAVING
 
@@ -151,8 +171,12 @@ select sucursal.nombre as sucursal, sum(contrato.salario) as total_salarios from
 where sucursal.idsucursal = vinculos.idsucursal and contrato.idcontrato = empleado.idempleado
 and vinculos.idempleado = empleado.idempleado group by sucursal.nombre having total_salarios > 30000000;
 
--- d) Cantidad de maquinaria sin pagar por sucursal cuando es mayor a 5
+-- c) Cantidad de maquinaria sin pagar por sucursal cuando es mayor a 5
 
 select sucursal.nombre as sucursal, sum(maquinaria_y_equipo.idmaquinaria_y_equipo) as cantidad from maquinaria_y_equipo, sucursal,
 inventario where maquinaria_y_equipo.idinventario = inventario.idinventario and sucursal.idsucursal = inventario.idsucursal
 group by sucursal.nombre having cantidad > 5;
+
+
+
+
