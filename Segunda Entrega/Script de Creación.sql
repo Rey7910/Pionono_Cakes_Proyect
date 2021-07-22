@@ -223,4 +223,122 @@ insert into Cargos(Nombre) values ("Jefe");
 insert into Cargos(Nombre) values ("Administrador");
 insert into Cargos(Nombre) values ("Funcionario");
 insert into Cargos(Nombre) values ("Domiciliario");
-select * from Cargos;
+
+-- Tabla 'Empresa'
+
+insert into Empresa values('123456789','Pionono Cakes','Jeisson Clavijo','Cll 9 #4-07','Colombia');
+
+-- Tabla 'Contrato'
+
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',1,'01-01-2016',"$ 4'000.000",'');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2016',"2'200.000",'01-01-2026');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'05-02-2019',"1'300.000",'05-02-2024');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2019',"2'200.000",'01-01-2029');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-04-2018',"900.000",'15-04-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-04-2018',"1'300.000",'01-04-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'20-01-2020',"1'300.000",'20-01-2025');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2020',"2'200.000",'01-01-2030');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-02-2020',"900.000",'15-02-2025');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-01-2018',"1'300.000",'01-01-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'25-12-2016',"1'300.000",'25-12-2021');
+    
+
+-- Tabla 'Empleado'
+
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (1,'Jeisson','Clavijo','Cll 9 #4-07','3213633827','Compensar','Sopó','24-06-1996');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (2,'Johan','Clavijo','Cll 9 #4-07','3178753777','Compensar','Sopó','02-02-2002');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (3,'Juan','Ótero','Cll 8 #3-21','3145876521','Colsanitas','Cájica','05-02-1990');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (4,'Camila','Urrutia','Cra 5 #3-24','3123485468','Colsanitas','Cájica','14-08-1992');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (5,'Ivan','Restrepo','Cll 12 #12-06','3201484528','Cafesalud','Sopó','29-05-1996');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (6,'Juana','Parra','Cra 3 #7-12','3218455687','Colsanitas','Sopó','02-11-1998');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (7,'Johan','Piñeda','Cll 7 #1-02','3165849857','Cafesalud','Bogotá','16-08-2000');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (8,'Alberto','Gutierrez','Cll 12 #3-22','3102548974','Compensar','Bogotá','04-10-1997');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (9,'Lucia','Torres','Cra 6 #80-32','3215478956','Compensar','Bogotá','15-05-1995');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (10,'Fernando','Pinzón','Cra 6 #24-05','3102548689','Salud Total','Sopó','02-01-1999');
+insert into Empleado (idContrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values (11,'Luz','Villamil','Cll 4 #5-01','3145462137','Compensar','Sopó','20-08-1992');
+
+
+-- Tabla 'Sucursal'
+
+insert into Sucursal (NIT,Categoria,Nombre,Ubicacion,Ciudad, Administrador) values ('123456789','Punto de Fabricacion','Fabrica Pionono Cakes','Cll 9 #4-07','Sopó', 1);
+insert into Sucursal (NIT,Categoria,Nombre,Ubicacion,Ciudad, Administrador) values ('123456789','Punto de Venta','Pionono Cakes Sopó','Cra 6 #4-12','Sopó',2);
+insert into Sucursal (NIT,Categoria,Nombre,Ubicacion,Ciudad, Administrador) values ('123456789','Punto de Venta','Pionono Cakes Cájica','Cll 2 #3-27','Cájica',4);
+insert into Sucursal (NIT,Categoria,Nombre,Ubicacion,Ciudad, Administrador) values ('123456789','Punto de Venta','Pionono Cakes Bogotá','Cll 6 #12-07','Bogotá',8);
+
+-- Tabla 'Vinculos'
+
+insert into Vinculos (idSucursal,idEmpleado) values (1,1);
+insert into Vinculos (idSucursal,idEmpleado) values (2,2);
+insert into Vinculos (idSucursal,idEmpleado) values (3,3);
+insert into Vinculos (idSucursal,idEmpleado) values (3,4);
+insert into Vinculos (idSucursal,idEmpleado) values (2,5);
+insert into Vinculos (idSucursal,idEmpleado) values (2,6);
+insert into Vinculos (idSucursal,idEmpleado) values (4,7);
+insert into Vinculos (idSucursal,idEmpleado) values (4,8);
+insert into Vinculos (idSucursal,idEmpleado) values (4,9);
+insert into Vinculos (idSucursal,idEmpleado) values (1,10);
+insert into Vinculos (idSucursal,idEmpleado) values (1,11);
+
+-- Tabla 'Proveedor'
+
+insert into Proveedor (NIT,Nombre,Razon_Social,Ubicacion,Persona_de_contacto,Telefono_de_contacto,Categoria,Terminos_de_Negociacion,email) values('987456123','Todo Pan Chia','Todo Pan Chia S.A.S','Cll 13 #3-42 Chía Cundinamarca','Jennifer Grisales','3178756847','Reposteria','Se ofrece un descuento especial del 25% por compras periodicas superiores a $ 500.000 (COP)','todopanchia@outlook.es');
+insert into Proveedor (NIT,Nombre,Razon_Social,Ubicacion,Persona_de_contacto,Telefono_de_contacto,Categoria,Terminos_de_Negociacion,email) values('458795216','Super mercado Premier','Premier S.A.S','Cll 1 #5-22 Sopó Cundinamarca','Jorge Ramirez','3178756847','Reposteria','','premiermarket@gmail.com');
+insert into Proveedor (NIT,Nombre,Razon_Social,Ubicacion,Persona_de_contacto,Telefono_de_contacto,Categoria,Terminos_de_Negociacion,email) values('258147369','Accesorios de Cocina Viper','Viper S.A','Cra 32 #5-21 Bogotá','Roberto Rodriguez','3215478595','Maquinas de Cocina','','viperaccesorios@outlook.es');
+insert into Proveedor (NIT,Nombre,Razon_Social,Ubicacion,Persona_de_contacto,Telefono_de_contacto,Categoria,Terminos_de_Negociacion,email) values('457214587','Coca-Cola','Coca-Cola Company','Cll 10 #12-32 Tocancipa Cundinamarca','Henry Huerfano','3178756847','Bebidas Gaseosas','Se ofrece un descuento especial del 10% por compras periodicas superiores a $ 100.000 (COP)','coca-cola_company@hotmail.com');
+
+-- Tabla Inventario
+
+insert into Inventario (idSucursal) values(1);
+insert into Inventario (idSucursal) values(2);
+insert into Inventario (idSucursal) values(3);
+insert into Inventario (idSucursal) values(4);
+
+-- Tabla 'Maquinaria_y_Equipo'
+
+insert into Maquinaria_y_Equipo (idInventario,Nombre,Fecha_de_compra,Precio,Marca,Garantia,IVA,Estado_de_pago,Cantidad_a_pagar) values (1,'Horno industrial de 3 pisos','01-06-2017',2000000,'Kitchen Professional','5 años de Garantía',320000,'Pagado',0);
+insert into Maquinaria_y_Equipo (idInventario,Nombre,Fecha_de_compra,Precio,Marca,Garantia,IVA,Estado_de_pago,Cantidad_a_pagar) values (2,'Maquina Cafetera profesional','15-07-2021',1200000,'Kitchen Professional','2 años de Garantía',192000,'Pendiente',1200000);
+insert into Maquinaria_y_Equipo (idInventario,Nombre,Fecha_de_compra,Precio,Marca,Garantia,IVA,Estado_de_pago,Cantidad_a_pagar) values (1,'Mesa para pasteleria','10-08-2019',600000,'Kitchen Professional','1 año de Garantía',96000,'Pagado',0);
+insert into Maquinaria_y_Equipo (idInventario,Nombre,Fecha_de_compra,Precio,Marca,Garantia,IVA,Estado_de_pago,Cantidad_a_pagar) values (1,'Nevera para pasteles','01-06-2016',1800000,'Kitchen Professional','5 años de Garantía',288000,'Pagado',0);
+
+-- Tabla 'Adquisicion_Maquinaria_y_Equipo'
+
+insert into adquisicion_maquinaria_y_equipo (NIT,idmaquinaria_y_equipo) values(258147369,1);
+insert into adquisicion_maquinaria_y_equipo (NIT,idmaquinaria_y_equipo) values(258147369,2);
+insert into adquisicion_maquinaria_y_equipo (NIT,idmaquinaria_y_equipo) values(258147369,3);
+insert into adquisicion_maquinaria_y_equipo (NIT,idmaquinaria_y_equipo) values(258147369,4);
+
+-- Tabla 'Insumo'
+
+insert into Insumo (idInventario,Nombre,Cantidad,Unidad_de_Medida,Precio_por_unidad_de_medida,Marca,fecha_de_compra,Estado_de_pago,Cantidad_a_pagar,IVA) values (1,'Harina de trigo',500,'gr',5,'Haz de Oro','02-01-2021','Pagado',0,400);
+insert into Insumo (idInventario,Nombre,Cantidad,Unidad_de_Medida,Precio_por_unidad_de_medida,Marca,fecha_de_compra,Estado_de_pago,Cantidad_a_pagar,IVA) values (1,'Azucar glass',500,'gr',3,'Rio Paila','02-01-2021','Pagado',0,240);
+insert into Insumo (idInventario,Nombre,Cantidad,Unidad_de_Medida,Precio_por_unidad_de_medida,Marca,fecha_de_compra,Estado_de_pago,Cantidad_a_pagar,IVA) values (2,'Coca-cola Zero',1500,'ml',2,'Coca-Cola','10-01-2021','Pagado',0,480);
+
+-- Tabla 'Adquisicion Insumos'
+
+insert into Adquisicion_insumos (NIT,idInsumo) values(987456123,1);
+
+-- Tabla 'Producto'
+
+insert into Producto (Nombre,Precio,Fecha_de_produccion,Categoria,Fecha_de_caducidad,Punto_de_fabricacion) values ('Torta de Amapola',15000,'10-01-2021','Pasteleria','30-01-2021',1);
+
+-- Tabla 'Cliente'
+
+insert into Cliente (Nombre,Apellido,Perfil) values ('John','Sarmiento','Frecuente');
+insert into Cliente (Nombre,Apellido,Perfil) values ('Valeria','Gallo','Casual');
+
+-- Tabla 'Venta'
+
+insert into Venta (idEmpleado,idCliente,idSucursal,Fecha) values (3,1,2,'22-06-2021');
+insert into Venta (idEmpleado,idCliente,idSucursal,Fecha) values (9,2,4,'14-05-2021');
+
+-- Tabla 'Venta_productos'
+
+insert into Venta_productos (idVenta,idProducto) values (1,1);
+
+-- Tabla 'Venta_insumos'
+
+insert into Venta_insumos (idVenta,idInsumo) values (2,3);
+
+-- Tabla 'Domicilio'
+
+insert into Domicilio (idCliente,idEmpleado,idVenta,Direccion_entrega) values (1,3,1,'Cll 3 # 1-03 Sopó Cundinamarca');
