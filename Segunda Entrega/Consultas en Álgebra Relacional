@@ -17,7 +17,7 @@ salario, contrato.fecha_contratacion, contrato.fecha_terminacion
 
 -- b)  Empleados y la respectiva sucursal a la que estan vinculados (puede ser más de una)
 
-π empleado.nombre, empleado.apellido, sucursal.nombre 
+π empleado.nombre, empleado.apellido, sucursal.nombre → sucursal
 (σ empleado.idEmpleado=vinculos.idempleado 
 ∧ sucursal.idsucursal=vinculos.idsucursal(empleado ⨝ sucursal ⨝ vinculos))
 
@@ -29,14 +29,14 @@ venta.fecha   venta_productos
 
 -- d)Ventas de cada empleado en su respectiva sucursal y fecha
 
-π empleado.nombre, empleado.apellido, sucursal.nombre as sucursal,
+π empleado.nombre, empleado.apellido, sucursal.nombre → sucursal,
 venta.fecha (σ venta_productos.idventa=venta.idventa ∧ venta.idempleado=empleado.idempleado ∧ 
 producto.idProducto=venta_productos.idProducto ∧ sucursal.idsucursal = venta.idsucursal
 (empleado ⨝ producto ⨝ venta ⨝ venta_productos ⨝ sucursal))
 
 -- e) Administradores de las sucursales de la microempresa
 
-π empleado.nombre, empleado.apellido, sucursal.nombre 
+π empleado.nombre, empleado.apellido, sucursal.nombre → sucursal
 (σ cargos.nombre = "Administrador"
 ∧ empleado.idempleado = sucursal.administrador ∧ contrato.idcargo = cargos.idcargo
 ∧ empleado.idcontrato = contrato.idcontrato
@@ -51,13 +51,13 @@ producto.idProducto=venta_productos.idProducto ∧ sucursal.idsucursal = venta.i
 
 -- g) Maquinaría, su marca y su respectiva sucursal
 
-π maquinaria_y_equipo.nombre , maquinaria_y_equipo.marca , sucursal.nombre 
+π maquinaria_y_equipo.nombre , maquinaria_y_equipo.marca , sucursal.nombre → sucursal
 (σ maquinaria_y_equipo.idinventario=inventario.idinventario
 ∧ inventario.idsucursal = sucursal.idsucursal(maquinaria_y_equipo ⨝ sucursal ⨝ inventario))
 
 -- h) Insumos adquiridos con su respectivo proveedor y fecha de compra
 
-π insumo.nombre, proveedor.nombre as provedor, insumo.fecha_de_compra 
+π insumo.nombre, proveedor.nombre → provedor, insumo.fecha_de_compra 
 (σ insumo.idinsumo=adquisicion_insumos.idinsumo ∧ proveedor.NIT = adquisicion_insumos.NIT(insumo ⨝ proveedor ⨝ adquisicion_insumos))
 
 -- i)Clientes con sus perfiles y sus respectivas direcciones
