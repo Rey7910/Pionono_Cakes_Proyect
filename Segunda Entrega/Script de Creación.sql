@@ -63,7 +63,7 @@ CREATE TABLE Contrato(
     NIT  varchar(45),
     idCargo int,
     Fecha_Contratacion varchar(45) not null,
-    Salario varchar(45) not null,
+    Salario int not null,
     Fecha_Terminacion varchar(45),
     PRIMARY KEY (idContrato,NIT,idCargo),
     FOREIGN KEY (NIT) REFERENCES Empresa(NIT),
@@ -230,17 +230,17 @@ insert into Empresa values('123456789','Pionono Cakes','Jeisson Clavijo','Cll 9 
 
 -- Tabla 'Contrato'
 
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',1,'01-01-2016',"$ 4'000.000",'');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2016',"2'200.000",'01-01-2026');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'05-02-2019',"1'300.000",'05-02-2024');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2019',"2'200.000",'01-01-2029');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-04-2018',"900.000",'15-04-2023');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-04-2018',"1'300.000",'01-04-2023');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'20-01-2020',"1'300.000",'20-01-2025');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2020',"2'200.000",'01-01-2030');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-02-2020',"900.000",'15-02-2025');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-01-2018',"1'300.000",'01-01-2023');
-insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'25-12-2016',"1'300.000",'25-12-2021');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',1,'01-01-2016',4000000,'');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2016',2200000,'01-01-2026');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'05-02-2019',1300000,'05-02-2024');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2019',2200000,'01-01-2029');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-04-2018',900000,'15-04-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-04-2018',1300000,'01-04-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'20-01-2020',1300000,'20-01-2025');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',2,'01-01-2020',2200000,'01-01-2030');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',4,'15-02-2020',900000,'15-02-2025');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'01-01-2018',1300000,'01-01-2023');
+insert into Contrato (NIT,idCargo,Fecha_contratacion,salario,fecha_terminacion) values ('123456789',3,'25-12-2016',1300000,'25-12-2021');
     
 
 -- Tabla 'Empleado'
@@ -342,3 +342,4 @@ insert into Venta_insumos (idVenta,idInsumo) values (2,3);
 -- Tabla 'Domicilio'
 
 insert into Domicilio (idCliente,idEmpleado,idVenta,Direccion_entrega) values (1,3,1,'Cll 3 # 1-03 Sopó Cundinamarca');
+
