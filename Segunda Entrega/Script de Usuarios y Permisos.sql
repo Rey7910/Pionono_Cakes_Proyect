@@ -24,23 +24,23 @@ from empleado,cargos,contrato where empleado.idcontrato = contrato.idcontrato
 and contrato.idcargo = cargos.idcargo;
 
 -- Jefes
-create user 'Jeisson Clavijo'@'localhost' identified by '12345';
+create user 'Jeisson Clavijo'@'localhost' identified with mysql_native_password by '12345';
 
 -- Administradores
-create user 'Camila Urrutia'@'localhost' identified by '12345';
-create user 'Johan Clavijo'@'localhost' identified by '12345';
-create user 'Alberto Gutierrez'@'localhost' identified by '12345';
+create user 'Camila Urrutia'@'localhost' identified with mysql_native_password by '12345';
+create user 'Johan Clavijo'@'localhost' identified with mysql_native_password by '12345';
+create user 'Alberto Gutierrez'@'localhost' identified with mysql_native_password by '12345';
 
 -- Funcionarios
-create user 'Juan Ótero'@'localhost' identified by '12345';
-create user 'Juana Parra'@'localhost' identified by '12345';
-create user 'Johan Piñeda'@'localhost' identified by '12345';
-create user 'Fernando Pinzón'@'localhost' identified by '12345';
-create user 'Luz Villamil'@'localhost' identified by '12345';
+create user 'Juan Ótero'@'localhost' identified with mysql_native_password by '12345';
+create user 'Juana Parra'@'localhost' identified with mysql_native_password by '12345';
+create user 'Johan Piñeda'@'localhost' identified with mysql_native_password by '12345';
+create user 'Fernando Pinzón'@'localhost' identified with mysql_native_password by '12345';
+create user 'Luz Villamil'@'localhost' identified with mysql_native_password by '12345';
 
 -- Domiciliarios
-create user 'Ivan Restrepo'@'localhost' identified by '12345';
-create user 'Lucia Torres'@'Localhost' identified by '12345';
+create user 'Ivan Restrepo'@'localhost' identified with mysql_native_password by'12345';
+create user 'Lucia Torres'@'Localhost' identified with mysql_native_password by '12345';
 
 
 
@@ -68,6 +68,8 @@ grant select on pionono_cakes.info_contratos to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.venta_insumos to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.venta_productos to 'Johan Clavijo'@'Localhost';
 grant all on pionono_cakes.domicilio to 'Johan Clavijo'@'Localhost';
+grant select on pionono_cakes.sucursal to 'Johan Clavijo'@'Localhost';
+
 
 -- Administrador 2
 grant select on pionono_cakes.adm_contratos to 'Camila Urrutia'@'localhost';
@@ -88,6 +90,7 @@ grant select on pionono_cakes.info_contratos to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.venta_insumos to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.venta_productos to 'Camila Urrutia'@'localhost';
 grant all on pionono_cakes.domicilio to 'Camila Urrutia'@'localhost';
+grant select on pionono_cakes.sucursal to 'Camila Urrutia'@'localhost';
 
 -- Administrador 3
 grant select on pionono_cakes.adm_contratos to 'Alberto Gutierrez'@'localhost';
@@ -108,6 +111,8 @@ grant select on pionono_cakes.info_contratos to 'Alberto Gutierrez'@'localhost';
 grant select on pionono_cakes.venta_insumos to 'Alberto Gutierrez'@'localhost';
 grant select on pionono_cakes.venta_productos to 'Alberto Gutierrez'@'localhost';
 grant all on pionono_cakes.domicilio to 'Alberto Gutierrez'@'localhost';
+grant select on pionono_cakes.sucursal to 'Alberto Gutierrez'@'localhost';
+
 
 -- Permisos de Funcionarios
 
