@@ -113,6 +113,24 @@ class Database:
         except Exception as e:
             raise
     
+    def borrar_empleados(self,nombre,apellido):
+        sql="select idcontrato from empleado where nombre='{}' and apellido='{}'".format(nombre, apellido)
+        try:
+            self.cursor.execute(sql)
+            idcontrato = self.cursor.fetchone()
+            idcontrato = idcontrato[0]
+            print(idcontrato)
+            sql = "delete from empleado where idcontrato={}".format(idcontrato)
+            self.cursor.execute(sql)
+            self.connection.commit()
+            print("borrado de empleado")
+            sql = "delete from contrato where idcontrato={}".format(idcontrato)
+            self.cursor.execute(sql)
+            self.connection.commit()
+            print("borrado de contrato")
+            
+        except:
+            raise
     
     def info_empleados(self):
         sql = "select * from empleado"
@@ -120,8 +138,8 @@ class Database:
             self.cursor.execute(sql)
             empleados = self.cursor.fetchall()
             for empleado in empleados:
-                print("Nombre: ",empleado[1])
-                print("Apellido: ",empleado[2])
+                print("Nombre: ",empleado[2])
+                print("Apellido: ",empleado[3])
                 print("-----")
         except Exception as e:
             raise
@@ -193,6 +211,7 @@ try:
         try:
             database.insertar_Empleado("Reinaldo", "Toledo","Cll 26 - Bogotá","3108023456","Colsanitas","Bogotá",1,5,2002,"Jefe",1,4,2021,100000,3,11,2021)
             print("empleado registrado")
+            database.borrar_empleados("Reinaldo", "Toledo")
         except:
             print("no ha sido posible el registro")
     database.cerrar_conexion()
