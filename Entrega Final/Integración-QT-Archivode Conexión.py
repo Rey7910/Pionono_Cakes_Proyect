@@ -90,6 +90,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.apellido_label.setText(apellido)
         self.password_label.setText(contrasena)
         self.btn_logout.clicked.connect(self.desconectar)
+        
         nombre = self.nombre_label.text()
         apellido = self.apellido_label.text()
         contrasena = self.password_label.text()
@@ -109,6 +110,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_proveedores.clicked.connect(self.proveedores)
         self.btn_mi_info.clicked.connect(self.mi_informacion)
         self.btn_contratos.clicked.connect(self.contratos)
+        self.btn_mi_contrato.clicked.connect(self.mi_contrato)
         
     
     def desconectar(self):
@@ -124,10 +126,19 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         nombre = self.nombre_label.text()
         apellido = self.apellido_label.text()
         contrasena = self.password_label.text()
-        self.ventana = QtWidgets.QMainWindow()
-        self.ui = mi_info(nombre,apellido,contrasena)
-        self.ui.setupUi(self.ventana)
+        self.ventana =  mi_info(nombre,apellido,contrasena)
+       # mi_info(nombre,apellido,contrasena)
+        #self.ui.setupUi(self.ventana)
+        #self.ventana.exec_()
         self.ventana.show()
+    
+    def mi_contrato(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_contrato(nombre,apellido,contrasena)
+        self.ventana.show()
+    
     
     def empleados(self):
        # usuario=nombre+' '+contrasena
@@ -206,7 +217,6 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(contrasena)
         print(apellido)
         print(usuario)
-        database = Database(usuario,contrasena)
         self.tabla.clear()
       #  columnas = ("Producto","Cliente","Empleado","Sucursal","Fecha")
      #   self.tabla.setHorizontalHeaderLabels(columnas)
@@ -284,7 +294,6 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(contrasena)
         print(apellido)
         print(usuario)
-        database = Database(usuario,contrasena)
         self.tabla.clear()
         columnas = ("Producto","Nombre-Cliente","Apellido-Cliente","Nombre-Empleado","Apellido-Empleado","Sucursal"," ")
         self.tabla.setHorizontalHeaderLabels(columnas)
@@ -520,7 +529,13 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)  
         self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo+" de "+sucursal)
+        self.user_label.setText(usuario)
+        self.nombre_label.setText(nombre)
+        self.apellido_label.setText(apellido)
+        self.password_label.setText(contrasena)
         self.btn_logout.clicked.connect(self.desconectar)
+        self.btn_mi_info.clicked.connect(self.mi_informacion)
+        self.btn_mi_contrato.clicked.connect(self.mi_contrato)
     
     def desconectar(self):
         widget.setFixedWidth(700)
@@ -529,6 +544,24 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         inicio=login()
         widget.addWidget(inicio)
         widget.setCurrentIndex(widget.currentIndex()+1)
+    
+    def mi_informacion(self):
+        
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_info(nombre,apellido,contrasena)
+       # mi_info(nombre,apellido,contrasena)
+        #self.ui.setupUi(self.ventana)
+        #self.ventana.exec_()
+        self.ventana.show()
+        
+    def mi_contrato(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_contrato(nombre,apellido,contrasena)
+        self.ventana.show()
 
 ## Ventana Funcionario
 qtCreatorFile3="Ventana_Funcionario.ui"
@@ -542,9 +575,15 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)  
-        self.usuario_label.setText(usuario)
+        self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo)
+        self.user_label.setText(usuario)
+        self.nombre_label.setText(nombre)
+        self.apellido_label.setText(apellido)
+        self.password_label.setText(contrasena)
         self.btn_logout.clicked.connect(self.desconectar)
+        self.btn_mi_info.clicked.connect(self.mi_informacion)
+        self.btn_mi_contrato.clicked.connect(self.mi_contrato)
         
     
     def desconectar(self):
@@ -554,6 +593,24 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         inicio=login()
         widget.addWidget(inicio)
         widget.setCurrentIndex(widget.currentIndex()+1)
+    
+    def mi_informacion(self):
+        
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_info(nombre,apellido,contrasena)
+       # mi_info(nombre,apellido,contrasena)
+        #self.ui.setupUi(self.ventana)
+        #self.ventana.exec_()
+        self.ventana.show()
+        
+    def mi_contrato(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_contrato(nombre,apellido,contrasena)
+        self.ventana.show()
         
 ## Ventana Domiciliario    
 qtCreatorFile5="Ventana_Domiciliario.ui"
@@ -569,7 +626,13 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)  
         self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo)
+        self.user_label.setText(usuario)
+        self.nombre_label.setText(nombre)
+        self.apellido_label.setText(apellido)
+        self.password_label.setText(contrasena)
         self.btn_logout.clicked.connect(self.desconectar)
+        self.btn_mi_info.clicked.connect(self.mi_informacion)
+        self.btn_mi_contrato.clicked.connect(self.mi_contrato)
     
     def desconectar(self):
         widget.setFixedWidth(500)
@@ -578,22 +641,35 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         inicio=login()
         widget.addWidget(inicio)
         widget.setCurrentIndex(widget.currentIndex()+1)
+    
+    def mi_informacion(self):
+        
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        
+        self.ventana =  mi_info(nombre,apellido,contrasena)
+        self.ventana.show()
+        
+    def mi_contrato(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  mi_contrato(nombre,apellido,contrasena)
+        self.ventana.show()
         
 
-## Ventana de Mi información   
-qtCreatorFile5="mi_info.ui"
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile5)
-
-
-class mi_info(QtWidgets.QMainWindow,Ui_MainWindow ):
+# Ventana de mi información
+class mi_info(QtWidgets.QWidget):#,Ui_MainWindow ):
     def __init__(self,nombre,apellido,contrasena):
-        QtWidgets.QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
-        self.setupUi(self)
-        usuario = contrasena+' '+apellido
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("info.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        usuario = nombre+' '+apellido
         
-        database=Database("Jeisson Clavijo","12345")
+        database=Database(usuario,contrasena)
         
         sql = "SELECT * FROM info_empleados WHERE nombre = '{}' and apellido = '{}'".format(nombre,apellido)
         
@@ -602,11 +678,36 @@ class mi_info(QtWidgets.QMainWindow,Ui_MainWindow ):
         for atributos in info:
             self.nombre_label.setText("Nombre: "+atributos[0])
             self.apellido_label.setText("Apellido: "+atributos[1])
-            self.direccion_label.setText("Direccion: d"+atributos[2])
+            self.direccion_label.setText("Direccion: "+atributos[2])
             self.telefono_label.setText("Teléfono: "+atributos[3])
             self.eps_label.setText("EPS: "+atributos[4])
             self.ciudad_label.setText("Ciudad: "+atributos[5])
             self.fecha_label.setText("Fecha de Nacimiento: "+atributos[6])
+
+
+## Ventana de Mi Contrato
+class mi_contrato(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("contrato.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        usuario = nombre+' '+apellido
+        
+        database=Database(usuario,contrasena)
+        
+        sql = "SELECT * FROM info_contratos WHERE nombre = '{}' and apellido = '{}'".format(nombre,apellido)
+        
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        for atributos in info:
+            self.cargo_label.setText("Cargo: "+atributos[2])
+            self.salario_label.setText("Salario: "+str(atributos[3]))
+            self.contratacion_label.setText("Fecha de Contratación: "+atributos[4])
+            self.terminacion_label.setText("Fecha de Terminación: "+atributos[5])
+            
+        
+    
 
 
 
