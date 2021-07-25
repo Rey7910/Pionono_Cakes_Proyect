@@ -302,9 +302,20 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(usuario)
         database = Database(usuario,contrasena)
         self.tabla.clear()
-        columnas = ("Insumo","Cliente","Domiciliario","Sucursal","Dirección")
+        columnas = ("Insumo","Cliente","Domiciliario","Dirección")
         self.tabla.setHorizontalHeaderLabels(columnas)
-   
+        sql = "select insumo.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), domicilio.direccion_entrega  from domicilio,empleado,venta,cliente,venta_insumos,insumo where domicilio.idventa = venta.idventa and cliente.idcliente = domicilio.idcliente and empleado.idempleado = domicilio.idempleado and venta_insumos.idventa = domicilio.idventa and insumo.idinsumo = venta_insumos.idinsumo;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            
+            fila+=1
     
     def domicilios_productos(self):
         nombre = str(self.nombre_label.text())
@@ -317,8 +328,20 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(usuario)
         database = Database(usuario,contrasena)
         self.tabla.clear()
-        columnas = ("Producto","Cliente","Domiciliario","Sucursal","Dirección")
+        columnas = ("Producto","Cliente","Domiciliario","Dirección")
         self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select producto.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), domicilio.direccion_entrega  from domicilio,empleado,venta,cliente,venta_productos,producto where domicilio.idventa = venta.idventa and cliente.idcliente = domicilio.idcliente and empleado.idempleado = domicilio.idempleado and venta_productos.idventa = domicilio.idventa and producto.idproducto = venta_productos.idproducto;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            
+            fila+=1
         
     def maquinaria(self):
         self.insumos_check.hide()
