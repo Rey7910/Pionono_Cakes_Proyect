@@ -97,15 +97,18 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(contrasena)
         print(apellido)
         
+        self.insumos_check.hide()
+        self.productos_check.hide()
         self.btn_empleados.clicked.connect(self.empleados)
         self.btn_sucursales.clicked.connect(self.sucursales)
-        self.btn_ventas.clicked.connect(self.ventas);
-        self.btn_domicilios.clicked.connect(self.domicilio);
-        self.btn_maquinaria.clicked.connect(self.maquinaria);
-        self.btn_insumos.clicked.connect(self.insumos);
-        self.btn_productos.clicked.connect(self.productos);
-        self.btn_proveedores.clicked.connect(self.proveedores);
+        self.btn_ventas.clicked.connect(self.ventas)
+        self.btn_domicilios.clicked.connect(self.domicilio)
+        self.btn_maquinaria.clicked.connect(self.maquinaria)
+        self.btn_insumos.clicked.connect(self.insumos)
+        self.btn_productos.clicked.connect(self.productos)
+        self.btn_proveedores.clicked.connect(self.proveedores)
         self.btn_mi_info.clicked.connect(self.mi_informacion)
+        self.btn_contratos.clicked.connect(self.contratos)
         
     
     def desconectar(self):
@@ -117,6 +120,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         widget.setCurrentIndex(widget.currentIndex()+1)
     
     def mi_informacion(self):
+        
         nombre = self.nombre_label.text()
         apellido = self.apellido_label.text()
         contrasena = self.password_label.text()
@@ -127,6 +131,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def empleados(self):
        # usuario=nombre+' '+contrasena
+        self.insumos_check.hide()
+        self.productos_check.hide()
         self.tabla.clear()
         columnas=("Nombre","Apellido","Direccion","Telefono","EPS","Ciudad","Fecha-Nacimiento"," ","")
         self.tabla.setHorizontalHeaderLabels(columnas)
@@ -159,6 +165,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         
     
     def sucursales(self):
+        self.insumos_check.hide()
+        self.productos_check.hide()
         self.tabla.clear()
         columnas=("Categoria","Nombre","Ubicación","Ciudad","Administrador"," "," ")
         self.tabla.setHorizontalHeaderLabels(columnas)
@@ -188,6 +196,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         #self.tabla.setItem(2,2,QtWidgets.QTableWidgetItem("sd"))
     
     def ventas(self):
+        self.insumos_check.show()
+        self.productos_check.show()
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -198,11 +208,74 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         print(usuario)
         database = Database(usuario,contrasena)
         self.tabla.clear()
-        columnas = ("Producto","Nombre-Cliente","Apellido-Cliente","Nombre-Empleado","Apellido-Empleado","Sucursal"," ")
+      #  columnas = ("Producto","Cliente","Empleado","Sucursal","Fecha")
+     #   self.tabla.setHorizontalHeaderLabels(columnas)
+        
+        
+        self.insumos_check.stateChanged.connect(self.ventas_insumos)
+        self.productos_check.stateChanged.connect(self.ventas_productos)
+        
+    
+    
+    def ventas_insumos(self):
+       
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Insumo","Cliente","Empleado","Sucursal","Fecha")
         self.tabla.setHorizontalHeaderLabels(columnas)
-        #sql = ""
+        sql = "select insumo.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha from cliente,empleado,venta,sucursal,insumo,venta_insumos where cliente.idcliente = venta.idcliente and empleado.idempleado = venta.idempleado and venta_insumos.idinsumo = insumo.idinsumo and venta_insumos.idventa = venta.idventa and venta.idsucursal=sucursal.idsucursal;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
+        
+    def ventas_productos(self):
+       
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Producto","Cliente","Empleado","Sucursal","Fecha")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select producto.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha from cliente,empleado,venta,sucursal,producto,venta_productos where cliente.idcliente = venta.idcliente and empleado.idempleado = venta.idempleado and venta_productos.idproducto = producto.idproducto and venta_productos.idventa = venta.idventa and venta.idsucursal=sucursal.idsucursal;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
     
     def domicilio(self):
+        self.insumos_check.show()
+        self.productos_check.show()
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -215,8 +288,41 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabla.clear()
         columnas = ("Producto","Nombre-Cliente","Apellido-Cliente","Nombre-Empleado","Apellido-Empleado","Sucursal"," ")
         self.tabla.setHorizontalHeaderLabels(columnas)
+        self.insumos_check.stateChanged.connect(self.domicilios_insumos)
+        self.productos_check.stateChanged.connect(self.domicilios_productos)
     
+    def domicilios_insumos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Insumo","Cliente","Domiciliario","Sucursal","Dirección")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+   
+    
+    def domicilios_productos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Producto","Cliente","Domiciliario","Sucursal","Dirección")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        
     def maquinaria(self):
+        self.insumos_check.hide()
+        self.productos_check.hide()
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -247,6 +353,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         
         
     def insumos(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -279,6 +387,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def productos(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -306,6 +416,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
             fila+=1
     def contratos(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -316,10 +428,27 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
        print(usuario)
        database = Database(usuario,contrasena)
        self.tabla.clear()
-       columnas = ("Nombre","Apellido","Cargo","Salario","Contratación","Terminación","","","")
+       columnas = ("Nombre","Cargo","Salario","Contratación","Terminación","","","")
        self.tabla.setHorizontalHeaderLabels(columnas)
+       sql = "select concat(empleado.nombre,' ',empleado.apellido), cargos.nombre, contrato.salario, contrato.fecha_contratacion, contrato.fecha_terminacion from contrato, empleado, cargos where contrato.idcontrato=empleado.idcontrato and contrato.idcargo = cargos.idcargo;"
+       database.cursor.execute(sql)
+       info = database.cursor.fetchall()
+        
+       fila=0
+        #columna=0
+       for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(str(registro[3])))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            fila+=1
+       
         
     def proveedores(self): 
+        self.insumos_check.hide()
+        self.productos_check.hide()
+        self.tabla.clear()
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -332,6 +461,23 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabla.clear()
         columnas = ("NIT","Nombre","Razón Social","Ubicación","Contacto","Teléfono","Categoria","Negociación","Email")
         self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select * from proveedor"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(str(registro[3])))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
+            self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(registro[6]))
+            self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(registro[7]))
+            self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(registro[8]))
+            fila+=1
         
         
         
@@ -376,8 +522,7 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.usuario_label.setText(usuario)
         self.cargo_label.setText("Cargo: "+cargo)
         self.btn_logout.clicked.connect(self.desconectar)
-        usuario=self.usuario_label.text()
-        print(usuario)
+        
     
     def desconectar(self):
         widget.setFixedWidth(500)
