@@ -464,6 +464,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
        print(contrasena)
        print(apellido)
        print(usuario)
+       
+       
        database = Database(usuario,contrasena)
        self.tabla.clear()
        columnas = ("Nombre","Cargo","Salario","Contratación","Terminación","","","")
@@ -750,14 +752,51 @@ class insertar_empleado(QtWidgets.QWidget):#,Ui_MainWindow ):
             año_contratacion = int(self.ano_contratacion.text())
             año_nacimiento = int(self.ano_nac.text())
             año_terminacion = int(self.ano_terminacion.text())
-            
-            if(dia_nacimiento>0 and dia_contratacion>0 and  dia_terminacion >0 and mes_terminacion>0 and mes_contratacion > 0 and dia_nacimiento <=31 and dia_contratacion<=31 and dia_terminacion<=31 and mes_nacimiento <=12 and mes_contratacion<=12 and mes_terminacion<=12 and año_nacimiento>1950 and  año_contratacion>1950 and año_terminacion>1950 and año_nacimiento<2050 and año_contratacion<2050 and año_terminacion < 2050 and nombre!='' and apellido!='' and direccion!='' and telefono!='' and eps!='' and ciudad!='' and cargo!='' and salario!='' and (cargo=='Administrador' or cargo == 'Funcionario' or cargo == 'Domiciliario' or cargo == 'Jefe')):
+            permiso=cargo
+            if(dia_nacimiento>0 and dia_contratacion>0 and  dia_terminacion >0 and mes_terminacion>0 and mes_contratacion > 0 and dia_nacimiento <=31 and dia_contratacion<=31 and dia_terminacion<=31 and mes_nacimiento <=12 and mes_contratacion<=12 and mes_terminacion<=12 and año_nacimiento>1950 and  año_contratacion>1950 and año_terminacion>1950 and año_nacimiento<2050 and año_contratacion<2050 and año_terminacion < 2050 and nombre!='' and apellido!='' and direccion!='' and telefono!='' and eps!='' and ciudad!='' and cargo!='' and salario!=''):
             
                 fecha_nacimiento = conversor_fecha_int_str(dia_nacimiento,mes_nacimiento,año_nacimiento)
                 fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
                 fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
-                print("todo nice")
-                self.error_label.setText("Todo bien")
+                usuario = self.usuario_label.text()
+                contrasena = self.contrasena_label.text()
+                database=Database(usuario,contrasena)
+                sql = "select count(idempleado) from empleado where nombre = '{}' and apellido='{}'".format(nombre,apellido)
+                
+                database.cursor.execute(sql)
+                conteo=database.cursor.fetchone()
+                if conteo[0]>0:
+                        self.error_label.setText("Existe un Usuario con este Nombre")
+                
+                elif(cargo!='Administrador' and cargo != 'Funcionario' and cargo != 'Domiciliario' and cargo != 'Jefe'):
+                    self.error_label.setText("El cargo Suministrado no es válido")
+                    print(cargo)
+                else:
+                        sql="select idcargo from cargos where nombre = '{}'".format(cargo)
+                        database.cursor.execute(sql)
+                        idcargo = database.cursor.fetchone()
+                        idcargo = idcargo[0]
+        
+                        sql = "insert into contrato(NIT,idcargo,fecha_contratacion,salario,fecha_terminacion) values (123456789,{},'{}',{},'{}')".format(idcargo,fecha_contratacion,salario,fecha_terminacion)
+                        database.cursor.execute(sql)
+                        database.connection.commit()
+                        print("ingresado en contrato")
+                        
+                        sql = "select max(idcontrato) from contrato"
+                        database.cursor.execute(sql)
+                        idcontrato = database.cursor.fetchone()
+                        idcontrato = idcontrato[0]
+                        
+                        sql = "insert into empleado(idcontrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values ({},'{}','{}','{}','{}','{}','{}','{}')".format(idcontrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_nacimiento)
+                        database.cursor.execute(sql)
+                        database.connection.commit()
+                        print("empleado registrado")
+                        
+                    
+                        self.error_label.setText("Empleado Registrado Exitosamente")
+                        
+                        
+                        
             else: 
                 self.error_label.setText("Datos Invalidos")
         except:
