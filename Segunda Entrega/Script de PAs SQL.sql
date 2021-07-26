@@ -181,4 +181,13 @@ $$
 DELIMITER ;
 
 
+DELIMITER $$
+drop procedure if exists obtener_id;
+CREATE PROCEDURE obtener_id(nombre_u varchar(45),apellido_u varchar (45))
+BEGIN
+select idempleado from empleado where nombre=nombre_u and apellido=apellido_u;
+END;
+$$
+DELIMITER ;
+
 
