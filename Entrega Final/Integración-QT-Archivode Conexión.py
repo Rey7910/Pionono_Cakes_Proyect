@@ -172,8 +172,14 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(registro[6]))
             fila+=1
         #self.tabla.setItem(2,2,QtWidgets.QTableWidgetItem("sd"))
+        self.btn_insertar.clicked.connect(self.nuevo_empleado)
         
-        
+    def nuevo_empleado(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_empleado(nombre,apellido,contrasena)
+        self.ventana.show()
     
     def sucursales(self):
         self.insumos_check.hide()
@@ -707,7 +713,77 @@ class mi_contrato(QtWidgets.QWidget):#,Ui_MainWindow ):
             self.terminacion_label.setText("Fecha de Terminación: "+atributos[5])
             
         
-    
+## Ventana de Insertar empleado   
+
+class insertar_empleado(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_empleado.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+        
+    def insercion(self):
+        dia_nacimiento = int(self.dia_nac.text())
+        mes_nacimiento = int(self.mes_nac.text())
+        
+        
+        dia_contratacion = int(self.dia_contratacion.text())
+        mes_contratacion = int(self.mes_contratacion.text())
+        
+        
+        dia_terminacion = int(self.dia_terminacion.text())
+        mes_terminacion = int(self.mes_terminacion.text())
+        try:
+            nombre=str(self.nombre_label.text())
+            apellido=str(self.apellido_label.text())
+            direccion = str(self.direccion_label.text())
+            telefono = str(self.telefono_label.text())
+            eps = str(self.eps_label.text())
+            ciudad = str(self.ciudad_label.text())
+            cargo = str(self.cargo_label.text())
+            salario = str(self.salario_label.text())
+            año_contratacion = int(self.ano_contratacion.text())
+            año_nacimiento = int(self.ano_nac.text())
+            año_terminacion = int(self.ano_terminacion.text())
+            
+            if(dia_nacimiento>0 and dia_contratacion>0 and  dia_terminacion >0 and mes_terminacion>0 and mes_contratacion > 0 and dia_nacimiento <=31 and dia_contratacion<=31 and dia_terminacion<=31 and mes_nacimiento <=12 and mes_contratacion<=12 and mes_terminacion<=12 and año_nacimiento>1950 and  año_contratacion>1950 and año_terminacion>1950 and año_nacimiento<2050 and año_contratacion<2050 and año_terminacion < 2050 and nombre!='' and apellido!='' and direccion!='' and telefono!='' and eps!='' and ciudad!='' and cargo!='' and salario!='' and (cargo=='Administrador' or cargo == 'Funcionario' or cargo == 'Domiciliario' or cargo == 'Jefe')):
+            
+                fecha_nacimiento = conversor_fecha_int_str(dia_nacimiento,mes_nacimiento,año_nacimiento)
+                fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
+                fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
+                print("todo nice")
+                self.error_label.setText("Todo bien")
+            else: 
+                self.error_label.setText("Datos Invalidos")
+        except:
+            self.error_label.setText("Datos Invalidos")
+            
+        
+        
+        '''if(dia_nacimiento>0 and dia_contratacion>0 and  dia_terminacion >0 and mes_terminacion>0 and mes_contratacion > 0 and dia_nacimiento <=31 and dia_contratacion<=31 and dia_terminacion<=31 and mes_nacimiento <=12 and mes_contratacion<=12 and mes_terminacion<=12 and año_nacimiento>1950 and  año_contratacion>1950 and año_terminacion>1950 and año_nacimiento<2050 and año_contratacion<2050 and año_terminacion < 2050):
+            
+            fecha_nacimiento = conversor_fecha_int_str(dia_nacimiento,mes_nacimiento,año_nacimiento)
+            fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
+            fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
+            print(fecha_nacimiento)
+            print(fecha_contratacion)
+            print(fecha_terminacion)
+        else:
+            print("Datos invalidos")'''
+            
+        #fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
+       # fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
+        #self.
+    #def 
+        
+       # database=Database(usuario,contrasena)
+        
+       
 
 
 
@@ -764,6 +840,42 @@ class Database:
         except Exception as e:
             raise
 
+
+
+## Conversores
+
+def conversor_fecha_int_str(dia,mes,año):
+    if(dia>0 and dia<=31 and mes>0 and mes<=12 and año>1999 and año<2040):
+        if(dia<10):
+            dia = str(dia)
+            if(dia[0]!='0'):
+                dia='0'+str(dia)
+        if(mes<10):
+            mes = str(mes)
+            if(mes[0]!='0'):
+                mes='0'+str(mes)
+                
+    fecha=str(dia)+"-"+str(mes)+"-"+str(año)
+    return fecha
+
+
+def conversor_dia_str_int(fecha):
+    if(fecha[2]=='-' and fecha[5]=='-'):
+        dia = int(fecha[0]+fecha[1])
+    
+    return dia
+
+def conversor_mes_str_int(fecha):
+    if(fecha[2]=='-' and fecha[5]=='-'):
+        mes = int(fecha[3]+fecha[4])
+    
+    return mes
+
+def conversor_año_str_int(fecha):
+    if(fecha[2]=='-' and fecha[5]=='-'):
+        año = int(fecha[6]+fecha[7]+fecha[8]+fecha[9])
+    
+    return año
 
 if __name__ == "__main__":
     app =  QtWidgets.QApplication(sys.argv)
