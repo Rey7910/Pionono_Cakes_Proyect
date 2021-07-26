@@ -47,6 +47,7 @@ create user 'Lucia Torres'@'Localhost' identified by '12345';
 -- Permisos de Jefes
 -- Jefe 1
 grant all on pionono_cakes.* to "Jeisson Clavijo"@"Localhost";
+grant all on mysql.user to "Jeisson Clavijo"@"Localhost";
 -- Permisos Administradores
 
 -- Administrador 1
@@ -68,6 +69,8 @@ grant select on pionono_cakes.info_contratos to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.venta_insumos to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.venta_productos to 'Johan Clavijo'@'Localhost';
 grant all on pionono_cakes.domicilio to 'Johan Clavijo'@'Localhost';
+grant all on pionono_cakes.cliente to 'Johan Clavijo'@'Localhost';
+grant select on pionono_cakes.sucursal to 'Johan Clavijo'@'Localhost';
 
 -- Administrador 2
 grant select on pionono_cakes.adm_contratos to 'Camila Urrutia'@'localhost';
@@ -88,6 +91,8 @@ grant select on pionono_cakes.info_contratos to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.venta_insumos to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.venta_productos to 'Camila Urrutia'@'localhost';
 grant all on pionono_cakes.domicilio to 'Camila Urrutia'@'localhost';
+grant all on pionono_cakes.cliente to 'Camila Urrutia'@'localhost';
+grant select on pionono_cakes.sucursal to 'Camila Urrutia'@'localhost';
 
 -- Administrador 3
 grant select on pionono_cakes.adm_contratos to 'Alberto Gutierrez'@'localhost';
@@ -108,6 +113,7 @@ grant select on pionono_cakes.info_contratos to 'Alberto Gutierrez'@'localhost';
 grant select on pionono_cakes.venta_insumos to 'Alberto Gutierrez'@'localhost';
 grant select on pionono_cakes.venta_productos to 'Alberto Gutierrez'@'localhost';
 grant all on pionono_cakes.domicilio to 'Alberto Gutierrez'@'localhost';
+grant all on pionono_cakes.cliente to 'Alberto Gutierrez'@'localhost';
 
 -- Permisos de Funcionarios
 
@@ -123,6 +129,8 @@ grant update on pionono_cakes.info_empleados to 'Juan Ótero'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Juan Ótero'@'localhost';
 grant select on pionono_cakes.info_contratos to 'Juan Ótero'@'localhost';
 grant all on pionono_cakes.venta to 'Juan Ótero'@'localhost';
+grant all on pionono_cakes.cliente to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Juan Ótero'@'localhost';
 
 -- Funcionario 2
 grant all on pionono_cakes.adm_clientes to 'Juana Parra'@'localhost';
@@ -136,6 +144,9 @@ grant update on pionono_cakes.info_empleados to 'Juana Parra'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Juana Parra'@'localhost';
 grant select on pionono_cakes.info_contratos to'Juana Parra'@'localhost';
 grant all on pionono_cakes.venta to 'Juana Parra'@'localhost';
+grant all on pionono_cakes.cliente to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Juana Parra'@'localhost';
+
 -- Funcionario 3
 grant all on pionono_cakes.adm_clientes to 'Johan Piñeda'@'localhost';
 grant select on pionono_cakes.productos_vendidos to 'Johan Piñeda'@'localhost';
@@ -148,6 +159,9 @@ grant update on pionono_cakes.info_empleados to 'Johan Piñeda'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Johan Piñeda'@'localhost';
 grant select on pionono_cakes.info_contratos to 'Johan Piñeda'@'localhost';
 grant all on pionono_cakes.venta to 'Johan Piñeda'@'localhost';
+grant all on pionono_cakes.cliente to 'Johan Piñeda'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Johan Piñeda'@'localhost';
+
 -- Funcionario 4
 grant all on pionono_cakes.adm_clientes to 'Fernando Pinzón'@'localhost';
 grant select on pionono_cakes.productos_vendidos to 'Fernando Pinzón'@'localhost';
@@ -160,6 +174,9 @@ grant update on pionono_cakes.info_empleados to 'Fernando Pinzón'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Fernando Pinzón'@'localhost';
 grant select on pionono_cakes.info_contratos to 'Fernando Pinzón'@'localhost';
 grant all on pionono_cakes.venta to 'Fernando Pinzón'@'localhost';
+grant all on pionono_cakes.cliente to 'Fernando Pinzón'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Fernando Pinzón'@'localhost';
+
 
 -- Funcionario 5
 grant all on pionono_cakes.adm_clientes to 'Luz Villamil'@'localhost';
@@ -173,6 +190,8 @@ grant update on pionono_cakes.info_empleados to 'Luz Villamil'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Luz Villamil'@'localhost';
 grant select on pionono_cakes.info_contratos to 'Luz Villamil'@'localhost';
 grant all on pionono_cakes.venta to 'Luz Villamil'@'localhost';
+grant all on pionono_cakes.cliente to 'Luz Villamil'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Luz Villamil'@'localhost';
 
 -- Permisos Domiciliarios
 
@@ -185,6 +204,7 @@ grant update on pionono_cakes.info_empleados to 'Ivan Restrepo'@'localhost';
 grant select on pionono_cakes.info_empleados to 'Ivan Restrepo'@'localhost';
 grant select on pionono_cakes.info_contratos to 'Ivan Restrepo'@'localhost';
 grant all on pionono_cakes.domicilio to 'Ivan Restrepo'@'localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Ivan Restrepo'@'localhost';
 
 -- Domiciliario 2
 grant select on pionono_cakes.productos_vendidos to 'Lucia Torres'@'Localhost';
@@ -195,3 +215,6 @@ grant update on pionono_cakes.info_empleados to 'Lucia Torres'@'Localhost';
 grant select on pionono_cakes.info_empleados to 'Lucia Torres'@'Localhost';
 grant select on pionono_cakes.info_contratos to 'Lucia Torres'@'Localhost';
 grant all on pionono_cakes.domicilio to 'Lucia Torres'@'Localhost';
+grant execute on procedure pionono_cakes.obtener_id to 'Lucia Torres'@'Localhost';
+use pionono_cakes;
+select * from empleado;
