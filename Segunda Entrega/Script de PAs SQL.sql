@@ -218,3 +218,16 @@ values (idcontrato_u,nombre_u,apellido_u,direccion_u,telefono_u,eps_u,ciudad_u,f
 END;
 $$
 DELIMITER ;
+
+-- Vista de administradores para maquinarias
+DELIMITER $$
+CREATE PROCEDURE maquinaria_sucursal(usuario varchar(45))
+BEGIN
+SELECT maquinaria_y_equipo.nombre, maquinaria_y_equipo.fecha_de_compra, 
+maquinaria_y_equipo.precio, maquinaria_y_equipo.marca, maquinaria_y_equipo.garantia, maquinaria_y_equipo.estado_de_pago, maquinaria_y_equipo.cantidad_a_pagar FROM maquinaria_y_equipo, inventario, sucursal, empleado 
+WHERE maquinaria_y_equipo.idInventario = inventario.idInventario 
+AND inventario.idSucursal = sucursal.idSucursal AND sucursal.Administrador = empleado.idEmpleado 
+AND usuario = concat(empleado.nombre,' ', empleado.apellido);
+END;
+$$
+DELIMITER ;
