@@ -231,3 +231,18 @@ AND usuario = concat(empleado.nombre,' ', empleado.apellido);
 END;
 $$
 DELIMITER ;
+
+
+-- Vista de administradores para insumos
+
+DELIMITER $$
+CREATE PROCEDURE insumo_sucursal(usuario varchar(45))
+BEGIN
+select insumo.nombre, insumo.cantidad ,insumo.unidad_de_medida, insumo.precio_por_unidad_de_medida,
+insumo.marca, insumo.fecha_de_compra,insumo.estado_de_pago,insumo.cantidad_a_pagar, insumo.iva,sucursal.nombre 
+from insumo,sucursal,inventario,empleado where insumo.idinventario = inventario.idinventario 
+and sucursal.idsucursal = inventario.idsucursal AND sucursal.administrador = empleado.idempleado 
+AND usuario = concat(empleado.nombre,' ', empleado.apellido);
+END;
+$$
+DELIMITER ;
