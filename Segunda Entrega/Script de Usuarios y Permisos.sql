@@ -25,6 +25,7 @@ and contrato.idcargo = cargos.idcargo;
 
 -- Jefes
 create user 'Jeisson Clavijo'@'localhost' identified by '12345';
+grant execute on procedure pionono_cakes.nuevo_empleado to "Jeisson Clavijo"@"Localhost";
 
 -- Administradores
 create user 'Camila Urrutia'@'localhost' identified by '12345';
