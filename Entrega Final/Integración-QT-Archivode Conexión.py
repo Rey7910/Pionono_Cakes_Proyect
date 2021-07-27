@@ -1483,19 +1483,11 @@ class insertar_empleado(QtWidgets.QWidget):#,Ui_MainWindow ):
                         database.cursor.execute(sql)
                         idcargo = database.cursor.fetchone()
                         idcargo = idcargo[0]
+                        
+                        sql = "nuevo_empleado"
+                        parametros =(idcargo,nombre,apellido,direccion,telefono,eps,ciudad,fecha_nacimiento,fecha_contratacion,salario,fecha_terminacion)
         
-                        sql = "insert into contrato(NIT,idcargo,fecha_contratacion,salario,fecha_terminacion) values (123456789,{},'{}',{},'{}')".format(idcargo,fecha_contratacion,salario,fecha_terminacion)
-                        database.cursor.execute(sql)
-                        database.connection.commit()
-                        print("ingresado en contrato")
-                        
-                        sql = "select max(idcontrato) from contrato"
-                        database.cursor.execute(sql)
-                        idcontrato = database.cursor.fetchone()
-                        idcontrato = idcontrato[0]
-                        
-                        sql = "insert into empleado(idcontrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento) values ({},'{}','{}','{}','{}','{}','{}','{}')".format(idcontrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_nacimiento)
-                        database.cursor.execute(sql)
+                        database.cursor.callproc(sql, parametros)
                         database.connection.commit()
                         print("empleado registrado")
                         
