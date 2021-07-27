@@ -77,3 +77,9 @@ create view info_contratos as select empleado.Nombre, empleado.Apellido,
 cargos.nombre as cargo, contrato.salario, contrato.fecha_contratacion, contrato.fecha_terminacion 
 from empleado, contrato, cargos where empleado.idContrato = contrato.idContrato and cargos.idCargo=contrato.idCargo;
 
+
+
+create view sucursales_info as select  sucursal.categoria, sucursal.nombre, sucursal.ubicacion, sucursal.ciudad, 
+concat(empleado.nombre,' ', empleado.apellido) 
+from sucursal, empleado where empleado.idempleado = sucursal.administrador;
+
