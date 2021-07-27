@@ -72,6 +72,7 @@ grant all on pionono_cakes.domicilio to 'Johan Clavijo'@'Localhost';
 grant all on pionono_cakes.cliente to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.sucursal to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.obtener_id to 'Johan Clavijo'@'Localhost';
+grant all on pionono_cakes.empleado to 'Johan Clavijo'@'Localhost';
 
 -- Administrador 2
 grant select on pionono_cakes.adm_contratos to 'Camila Urrutia'@'localhost';
@@ -95,7 +96,7 @@ grant all on pionono_cakes.domicilio to 'Camila Urrutia'@'localhost';
 grant all on pionono_cakes.cliente to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.sucursal to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.obtener_id to 'Camila Urrutia'@'localhost';
-v
+grant all on pionono_cakes.empleado to 'Camila Urrutia'@'localhost';
 
 -- Administrador 3
 grant select on pionono_cakes.adm_contratos to 'Alberto Gutierrez'@'localhost';
@@ -118,6 +119,8 @@ grant select on pionono_cakes.venta_productos to 'Alberto Gutierrez'@'localhost'
 grant all on pionono_cakes.domicilio to 'Alberto Gutierrez'@'localhost';
 grant all on pionono_cakes.cliente to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.obtener_id to 'Alberto Gutierrez'@'localhost';
+grant all on pionono_cakes.empleado to 'Alberto Gutierrez'@'localhost';
+grant select on pionono_cakes.sucursal to 'Alberto Gutierrez'@'localhost';
 
 
 -- Permisos de Funcionarios
