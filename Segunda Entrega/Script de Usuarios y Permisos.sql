@@ -25,7 +25,6 @@ and contrato.idcargo = cargos.idcargo;
 
 -- Jefes
 create user 'Jeisson Clavijo'@'localhost' identified by '12345';
-grant execute on procedure pionono_cakes.nuevo_empleado to "Jeisson Clavijo"@"Localhost";
 
 -- Administradores
 create user 'Camila Urrutia'@'localhost' identified by '12345';
@@ -48,7 +47,7 @@ create user 'Lucia Torres'@'Localhost' identified by '12345';
 -- Permisos de Jefes
 -- Jefe 1
 grant all on pionono_cakes.* to "Jeisson Clavijo"@"Localhost";
-grant all on mysql.user to "Jeisson Clavijo"@"Localhost";
+grant execute on procedure pionono_cakes.nuevo_empleado to "Jeisson Clavijo"@"Localhost";
 -- Permisos Administradores
 
 -- Administrador 1
