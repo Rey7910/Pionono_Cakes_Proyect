@@ -591,7 +591,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_eliminar.hide()
         self.btn_modificar.hide()
         self.tabla.clear()
-        columnas = ("Categoria","Nombre","Ubicación","Ciudad","Administrador, Telefono")
+        columnas = ("Categoría","Nombre","Ubicación","Ciudad","Administrador, Telefono")
         self.tabla.setHorizontalHeaderLabels(columnas)
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
@@ -601,15 +601,20 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         conteo = "SELECT COUNT(sucursal.nombre) FROM sucursal, empleado WHERE '{}' = concat(empleado.nombre,' ', empleado.apellido) AND empleado.idempleado = sucursal.administrador".format(usuario)
         database.cursor.execute(conteo)
         numeroregistros = database.cursor.fetchall()
-        sql = "select sucursal.categoria, sucursal.nombre, sucursal.ubicacion, sucursal.ciudad, concat(empleado.nombre,' ', empleado.apellido), empleado.telefono from sucursal, empleado where empleado.idempleado = sucursal.administrador;" 
+        sql = "select * from sucursales_info" 
         database.cursor.execute(sql)
         info = database.cursor.fetchall()
         
-
-        for fila in range(numeroregistros[0][0]):
-            for registro in info:
-                for columna in range(len(columnas)):
-                    self.tabla.setItem(fila,columna,QtWidgets.QTableWidgetItem(registro[columna]))
+        fila=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
+        
 
     def ventas(self):
             self.insumos_check.show()
@@ -757,22 +762,23 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabla.clear()
         columnas = ("Nombre","Fecha_compra","Precio","Marca","Garantía","Estado_pago","Deuda")
         self.tabla.setHorizontalHeaderLabels(columnas)
-        sql = "SELECT maquinaria_y_equipo.nombre, maquinaria_y_equipo.fecha_de_compra, maquinaria_y_equipo.precio, maquinaria_y_equipo.marca, maquinaria_y_equipo.garantia, maquinaria_y_equipo.estado_de_pago, maquinaria_y_equipo.cantidad_a_pagar FROM maquinaria_y_equipo, inventario, sucursal, empleado WHERE maquinaria_y_equipo.idInventario = inventario.idInventario AND inventario.idSucursal = sucursal.idSucursal AND sucursal.Administrador = empleado.idEmpleado AND '{}' = concat(empleado.nombre,' ', empleado.apellido)".format(usuario)
-        database.cursor.execute(sql)
-        info = database.cursor.fetchall()
         
+        sql = "maquinaria_sucursal"
+        parametros = (usuario,)
+        print(usuario)
+            
+        database.cursor.callproc(sql, parametros)
         fila=0
-        #columna=0
-        for registro in info:
-            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
-            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
-            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
-            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
-            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
-            self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
-            self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
-            self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(str(registro[6])))
-            fila+=1   
+        for registro in database.cursor.stored_results():
+               sucur = registro.fetchone()
+               self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(sucur[0]))
+               self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(sucur[1]))
+               self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(sucur[2])))
+               self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(sucur[3]))
+               self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(sucur[4]))
+               self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(sucur[5]))
+               self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(str(sucur[6])))
+               fila+=1 
 
     def insumos(self):
        self.insumos_check.hide()
@@ -794,8 +800,28 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
        info = database.cursor.fetchall()
         
        fila=0
-        #columna=0
-       for registro in info:
+       
+       sql = "insumo_sucursal"
+       parametros = (usuario,)
+       print(usuario)
+            
+       database.cursor.callproc(sql, parametros)
+       fila=0
+       for registro in database.cursor.stored_results():
+               sucur = registro.fetchone()
+               self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(sucur[0]))
+               self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(sucur[1])))
+               self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(sucur[2])))
+               self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(str(sucur[3])))
+               self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(sucur[4]))
+               self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(sucur[5]))
+               self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(str(sucur[6])))
+               self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(str(sucur[7])))
+               self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(str(sucur[8])))
+               self.tabla.setItem(fila,9,QtWidgets.QTableWidgetItem(str(sucur[9])))
+               fila+=1 
+       
+       ''' for registro in info:
             self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
             self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
             self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
@@ -806,7 +832,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(str(registro[7])))
             self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(str(registro[8])))
             self.tabla.setItem(fila,9,QtWidgets.QTableWidgetItem(registro[9]))
-            fila+=1
+            fila+=1'''
 
     def productos(self):
        self.insumos_check.hide()
@@ -984,7 +1010,7 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         print(apellido)
         print(usuario)
         database = Database(usuario,contrasena)
-        sql = "select sucursal.categoria, sucursal.nombre, sucursal.ubicacion, sucursal.ciudad, concat(empleado.nombre,' ', empleado.apellido) from sucursal, empleado where empleado.idempleado = sucursal.administrador" 
+        sql = "select * from sucursales_info" 
         database.cursor.execute(sql)
         info = database.cursor.fetchall()
         
@@ -1348,7 +1374,41 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_logout.clicked.connect(self.desconectar)
         self.btn_mi_info.clicked.connect(self.mi_informacion)
         self.btn_mi_contrato.clicked.connect(self.mi_contrato)
+        self.btn_sucursales.clicked.connect(self.sucursales)
     
+    def sucursales(self):
+        self.insumos_check.hide()
+        self.productos_check.hide()
+        self.btn_insertar.hide()
+        self.btn_eliminar.hide()
+        self.btn_modificar.hide()
+        self.tabla.clear()
+        columnas=("Categoria","Nombre","Ubicación","Ciudad","Administrador"," "," ")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        sql = "select * from sucursales_info" 
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
+            
     def desconectar(self):
         widget.setFixedWidth(500)
         widget.setFixedHeight(400)
