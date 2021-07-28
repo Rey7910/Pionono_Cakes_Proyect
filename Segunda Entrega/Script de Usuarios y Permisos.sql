@@ -76,6 +76,10 @@ grant all on pionono_cakes.empleado to 'Johan Clavijo'@'Localhost';
 grant select on pionono_cakes.sucursales_info to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.maquinaria_sucursal to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.insumo_sucursal to 'Johan Clavijo'@'Localhost';
+grant select on ventas_insumos_adm to 'Johan Clavijo'@'Localhost';
+grant select on ventas_productos_adm to 'Johan Clavijo'@'Localhost';
+
+
 
 -- Administrador 2
 grant select on pionono_cakes.adm_contratos to 'Camila Urrutia'@'localhost';
@@ -103,7 +107,8 @@ grant all on pionono_cakes.empleado to 'Camila Urrutia'@'localhost';
 grant select on pionono_cakes.sucursales_info to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.maquinaria_sucursal to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.insumo_sucursal to 'Camila Urrutia'@'localhost';
-
+grant select on ventas_insumos_adm to 'Camila Urrutia'@'localhost';
+grant select on ventas_productos_adm to 'Camila Urrutia'@'localhost';
 
 -- Administrador 3
 grant select on pionono_cakes.adm_contratos to 'Alberto Gutierrez'@'localhost';
@@ -131,7 +136,8 @@ grant select on pionono_cakes.sucursal to 'Alberto Gutierrez'@'localhost';
 grant select on pionono_cakes.sucursales_info to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.maquinaria_sucursal to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.insumo_sucursal to 'Alberto Gutierrez'@'localhost';
-
+grant select on ventas_insumos_adm to 'Alberto Gutierrez'@'localhost';
+grant select on ventas_productos_adm to 'Alberto Gutierrez'@'localhost';
 
 -- Permisos de Funcionarios
 
@@ -279,6 +285,3 @@ grant select on pionono_cakes.info_contratos to 'Lucia Torres'@'Localhost';
 grant all on pionono_cakes.domicilio to 'Lucia Torres'@'Localhost';
 grant execute on procedure pionono_cakes.obtener_id to 'Lucia Torres'@'Localhost';
 grant select on pionono_cakes.sucursales_info to 'Lucia Torres'@'Localhost';
-
-
-
