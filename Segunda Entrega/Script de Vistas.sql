@@ -25,13 +25,14 @@ create view adm_contratos as select empleado.Nombre, empleado.Apellido,
 cargos.Nombre as cargo, contrato.fecha_contratacion, contrato.fecha_terminacion 
 from empleado, contrato, cargos where empleado.idContrato = contrato.idContrato and cargos.idCargo=contrato.idCargo;
 
--- Vista de productos vendidos 
-create view productos_vendidos as select Producto.nombre, cliente.nombre as cliente_n, cliente.apellido 
-as cliente_a, empleado.nombre as empleado_n, empleado.apellido as empleado_a,
-sucursal.nombre as sucursal from producto, empleado, cliente, venta_productos, sucursal, venta 
-where venta.idventa = venta_productos.idventa
-and cliente.idcliente = venta.idventa and venta.idempleado = empleado.idempleado and venta.idsucursal = sucursal.idsucursal
-and venta_productos.idproducto = producto.idproducto;
+-- Vista de productos vendidos ### NUEVA
+drop view if exists productos_vendidos;
+create view productos_vendidos as select producto.nombre as producto, concat(cliente.nombre,' ',cliente.apellido) ,
+ concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha 
+from cliente,empleado,venta,sucursal,producto,venta_productos 
+where cliente.idcliente = venta.idcliente and empleado.idempleado = venta.idempleado 
+and venta_productos.idproducto = producto.idproducto and venta_productos.idventa = venta.idventa
+and venta.idsucursal=sucursal.idsucursal;
 
 -- Vista de insumos vendidos 
 create view insumos_vendidos as select insumo.nombre, cliente.nombre as cliente_n, cliente.apellido 
