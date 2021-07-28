@@ -113,3 +113,9 @@ concat(empleado.nombre,' ',empleado.apellido) as Empleado, domicilio.direccion_e
 where domicilio.idventa = venta.idventa and cliente.idcliente = domicilio.idcliente and empleado.idempleado = domicilio.idempleado and 
 venta_productos.idventa = domicilio.idventa and producto.idproducto = venta_productos.idproducto;
 
+
+-- Cmabios 28 de Julio
+
+-- Vista productos totales
+create view producto_vista as select producto.nombre as producto ,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, 
+ sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;
