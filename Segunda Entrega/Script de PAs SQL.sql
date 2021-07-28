@@ -246,3 +246,14 @@ AND usuario = concat(empleado.nombre,' ', empleado.apellido);
 END;
 $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE producto_sucursal(usuario varchar(45))
+BEGIN
+select producto.Nombre, producto.precio , producto.Fecha_de_produccion, producto.categoria, producto.Fecha_de_caducidad ,producto.Punto_de_fabricacion
+from producto ,sucursal, empleado where Punto_de_fabricacion = sucursal.idsucursal
+AND sucursal.administrador = empleado.idempleado 
+AND usuario = concat(empleado.nombre,' ', empleado.apellido);
+END;
+$$
+DELIMITER ;
