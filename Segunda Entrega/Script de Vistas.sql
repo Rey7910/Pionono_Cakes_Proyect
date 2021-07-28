@@ -27,21 +27,23 @@ cargos.Nombre as cargo, contrato.fecha_contratacion, contrato.fecha_terminacion
 from empleado, contrato, cargos where empleado.idContrato = contrato.idContrato and cargos.idCargo=contrato.idCargo;
 
 -- Vista de productos vendidos 
-create view productos_vendidos as select Producto.nombre, cliente.nombre as cliente_n, cliente.apellido 
-as cliente_a, empleado.nombre as empleado_n, empleado.apellido as empleado_a,
-sucursal.nombre as sucursal from producto, empleado, cliente, venta_productos, sucursal, venta 
-where venta.idventa = venta_productos.idventa
-and cliente.idcliente = venta.idventa and venta.idempleado = empleado.idempleado and venta.idsucursal = sucursal.idsucursal
-and venta_productos.idproducto = producto.idproducto;
+drop view if exists productos_vendidos;
+create view productos_vendidos as select producto.nombre as producto, concat(cliente.nombre,' ',cliente.apellido) ,
+ concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha 
+from cliente,empleado,venta,sucursal,producto,venta_productos 
+where cliente.idcliente = venta.idcliente and empleado.idempleado = venta.idempleado 
+and venta_productos.idproducto = producto.idproducto and venta_productos.idventa = venta.idventa
+and venta.idsucursal=sucursal.idsucursal;
+select * from productos_vendidos;
 
--- Vista de insumos vendidos 
-create view insumos_vendidos as select insumo.nombre, cliente.nombre as cliente_n, cliente.apellido 
-as cliente_a, empleado.nombre as empleado_n, empleado.apellido as empleado_a,
-sucursal.nombre as sucursal from insumo, empleado, cliente, venta_insumos, sucursal, venta 
-where venta.idventa = venta_insumos.idventa
-and cliente.idcliente = venta.idventa and venta.idempleado = empleado.idempleado and venta.idsucursal = sucursal.idsucursal
-and venta_insumos.idinsumo = insumo.idinsumo;
-
+-- Vista de insumos vendidos
+drop view if exists insumos_vendidos;
+create view insumos_vendidos as select insumo.nombre as insumo, concat(cliente.nombre,' ',cliente.apellido) , 
+concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha 
+from cliente,empleado,venta,sucursal,insumo,venta_insumos where cliente.idcliente = venta.idcliente
+and empleado.idempleado = venta.idempleado and venta_insumos.idinsumo = insumo.idinsumo 
+and venta_insumos.idventa = venta.idventa and venta.idsucursal=sucursal.idsucursal;
+select * from insumos_vendidos;
 
 -- Vista de domicilios de insumos
 create view insumos_domicilio as select insumo.nombre, cliente.nombre as cliente_n, cliente.apellido 
