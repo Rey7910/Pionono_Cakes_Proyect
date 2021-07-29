@@ -116,11 +116,11 @@ venta_productos.idventa = domicilio.idventa and producto.idproducto = venta_prod
 -- Cmabios 28 de Julio
 
 -- Vista productos totales
-create view producto_vista as select producto.nombre as producto ,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, 
+create view producto_vista as select producto.idproducto, producto.nombre as producto ,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, 
 sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;
  
  -- Vista de insumos totales
- create view insumo_vista as select insumo.nombre as insumo, insumo.cantidad ,insumo.unidad_de_medida, insumo.precio_por_unidad_de_medida,insumo.marca,
+ create view insumo_vista as select insumo.idinsumo, insumo.nombre as insumo, insumo.cantidad ,insumo.unidad_de_medida, insumo.precio_por_unidad_de_medida,insumo.marca,
  insumo.fecha_de_compra,insumo.estado_de_pago,insumo.cantidad_a_pagar, insumo.iva,sucursal.nombre 
  from insumo,sucursal,inventario where insumo.idinventario = inventario.idinventario 
  and sucursal.idsucursal = inventario.idsucursal;
