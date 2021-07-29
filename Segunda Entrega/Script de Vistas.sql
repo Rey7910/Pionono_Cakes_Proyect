@@ -26,15 +26,14 @@ create view adm_contratos as select empleado.Nombre, empleado.Apellido,
 cargos.Nombre as cargo, contrato.fecha_contratacion, contrato.fecha_terminacion 
 from empleado, contrato, cargos where empleado.idContrato = contrato.idContrato and cargos.idCargo=contrato.idCargo;
 
--- Vista de productos vendidos 
+-- Vista de productos vendidos (funcionarios y domiciliarios)
 drop view if exists productos_vendidos;
 create view productos_vendidos as select producto.nombre as producto, concat(cliente.nombre,' ',cliente.apellido) ,
  concat(empleado.nombre,' ',empleado.apellido), sucursal.nombre, venta.fecha 
 from cliente,empleado,venta,sucursal,producto,venta_productos 
 where cliente.idcliente = venta.idcliente and empleado.idempleado = venta.idempleado 
-and venta_productos.idproducto = producto.idproducto and venta_productos.idventa = venta.idventa
-and venta.idsucursal=sucursal.idsucursal;
-select * from productos_vendidos;
+
+
 
 -- Vista de insumos vendidos
 drop view if exists insumos_vendidos;
@@ -118,4 +117,10 @@ venta_productos.idventa = domicilio.idventa and producto.idproducto = venta_prod
 
 -- Vista productos totales
 create view producto_vista as select producto.nombre as producto ,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, 
- sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;
+sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;
+ 
+ -- Vista de insumos totales
+ create view insumo_vista as select insumo.nombre as insumo, insumo.cantidad ,insumo.unidad_de_medida, insumo.precio_por_unidad_de_medida,insumo.marca,
+ insumo.fecha_de_compra,insumo.estado_de_pago,insumo.cantidad_a_pagar, insumo.iva,sucursal.nombre 
+ from insumo,sucursal,inventario where insumo.idinventario = inventario.idinventario 
+ and sucursal.idsucursal = inventario.idsucursal;
