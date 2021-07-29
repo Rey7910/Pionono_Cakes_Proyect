@@ -257,3 +257,16 @@ AND usuario = concat(empleado.nombre,' ', empleado.apellido);
 END;
 $$
 DELIMITER ;
+
+-- Insertar producto
+
+DELIMITER $$
+CREATE PROCEDURE nuevo_producto(nombre varchar(45),precio int, fecha_de_produccion varchar(45), 
+fecha_caducidad varchar(45), categoria varchar(45))
+BEGIN
+insert into producto(nombre, precio, fecha_de_produccion, categoria, fecha_de_caducidad, 
+punto_de_fabricacion)
+values (nombre, precio, fecha_de_produccion, fecha_caducidad, categoria, 1);
+END;
+$$
+DELIMITER ;
