@@ -266,7 +266,7 @@ fecha_caducidad varchar(45), categoria varchar(45))
 BEGIN
 insert into producto(nombre, precio, fecha_de_produccion, categoria, fecha_de_caducidad, 
 punto_de_fabricacion)
-values (nombre, precio, fecha_de_produccion, fecha_caducidad, categoria, 1);
+values (nombre, precio, fecha_de_produccion,categoria, fecha_caducidad, 1);
 END;
 $$
 DELIMITER ;
