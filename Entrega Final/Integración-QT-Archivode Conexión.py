@@ -111,6 +111,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_mi_info.clicked.connect(self.mi_informacion)
         self.btn_contratos.clicked.connect(self.contratos)
         self.btn_mi_contrato.clicked.connect(self.mi_contrato)
+        self.btn_clientes.clicked.connect(self.clientes)
         
     
     def desconectar(self):
@@ -425,6 +426,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def productos(self):
+       self.btn_insertar.clicked.connect(self.insertar_producto)
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -437,14 +439,13 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
        print(usuario)
        database = Database(usuario,contrasena)
        self.tabla.clear()
-       columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación","","","")
+       columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación")
        self.tabla.setHorizontalHeaderLabels(columnas)
-       sql = "select producto.nombre,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;"
+
+       sql = "select * from producto_vista"
        database.cursor.execute(sql)
        info = database.cursor.fetchall()
-        
        fila=0
-        #columna=0
        for registro in info:
             self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
             self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
@@ -453,6 +454,14 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
             self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
             fila+=1
+    
+    def insertar_producto(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_producto(nombre,apellido,contrasena)
+        self.ventana.show()
+        
     def contratos(self):
        self.insumos_check.hide()
        self.productos_check.hide()
@@ -518,7 +527,34 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(registro[7]))
             self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(registro[8]))
             fila+=1
+   
+    def clientes(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
+       nombre = str(self.nombre_label.text())
+       apellido = str( self.apellido_label.text())
+       contrasena = str(self.password_label.text())
+       usuario = str(nombre + " "+apellido)
+       print(nombre)
+       print(contrasena)
+       print(apellido)
+       print(usuario)
+       database = Database(usuario,contrasena)
+       self.tabla.clear()
+       columnas = ("Nombre","Apellido","Perfil")
+       self.tabla.setHorizontalHeaderLabels(columnas)
+       sql = "select * from adm_clientes"
+       database.cursor.execute(sql)
+       info = database.cursor.fetchall()
         
+       fila=0
+        #columna=0
+       for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            
+            fila+=1
         
         
 
@@ -584,7 +620,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ventana.show()
 
 
-        def sucursales(self):
+    def sucursales(self):
         self.insumos_check.hide()
         self.productos_check.hide()
         self.btn_insertar.hide()
@@ -775,7 +811,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
                self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(str(sucur[6])))
                fila+=1 
 
-   def insumos(self):
+    def insumos(self):
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -812,7 +848,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
                fila+=1 
        
 
-   def productos(self):
+    def productos(self):
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -827,7 +863,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
        self.tabla.clear()
        columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación")
        self.tabla.setHorizontalHeaderLabels(columnas)
-       sql = "productos_sucursal"
+       sql = "producto_sucursal"
        parametros = (usuario,)
        print(usuario)
        database.cursor.callproc(sql, parametros)
@@ -1197,7 +1233,8 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
        self.tabla.clear()
        columnas = ("Nombre","Cantidad","Unidad_medida","Precio_unidad","Marca","Fecha","Estado_pago","Deuda","IVA","Sucursal")
        self.tabla.setHorizontalHeaderLabels(columnas)
-       sql = "select insumo.nombre, insumo.cantidad ,insumo.unidad_de_medida, insumo.precio_por_unidad_de_medida,insumo.marca, insumo.fecha_de_compra,insumo.estado_de_pago,insumo.cantidad_a_pagar, insumo.iva,sucursal.nombre from insumo,sucursal,inventario where insumo.idinventario = inventario.idinventario and sucursal.idsucursal = inventario.idsucursal ;"
+      
+       sql = "select * from insumo_vista"
        database.cursor.execute(sql)
        info = database.cursor.fetchall()
         
@@ -1229,14 +1266,13 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
        print(usuario)
        database = Database(usuario,contrasena)
        self.tabla.clear()
-       columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación","","","")
+       columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación")
        self.tabla.setHorizontalHeaderLabels(columnas)
-       sql = "select producto.nombre,producto.precio,producto.fecha_de_produccion, producto.categoria,producto.fecha_de_caducidad, sucursal.nombre from producto,sucursal where producto.punto_de_fabricacion=sucursal.idsucursal;"
+        
+       sql = "select * from producto_vista"
        database.cursor.execute(sql)
        info = database.cursor.fetchall()
-        
        fila=0
-        #columna=0
        for registro in info:
             self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
             self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
@@ -1245,7 +1281,10 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
             self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
             fila+=1
-    
+           
+            
+          
+
     def clientes(self):
        self.insumos_check.hide()
        self.productos_check.hide()
@@ -1353,6 +1392,10 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_mi_info.clicked.connect(self.mi_informacion)
         self.btn_mi_contrato.clicked.connect(self.mi_contrato)
         self.btn_sucursales.clicked.connect(self.sucursales)
+        self.btn_clientes.clicked.connect(self.clientes)
+        self.btn_ventas.clicked.connect(self.ventas)
+        self.btn_productos.clicked.connect(self.productos)
+        self.btn_insumos.clicked.connect(self.insumos)
     
     def sucursales(self):
         self.insumos_check.hide()
@@ -1386,6 +1429,169 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
             
             fila+=1
+    
+    def clientes(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
+       nombre = str(self.nombre_label.text())
+       apellido = str( self.apellido_label.text())
+       contrasena = str(self.password_label.text())
+       usuario = str(nombre + " "+apellido)
+       print(nombre)
+       print(contrasena)
+       print(apellido)
+       print(usuario)
+       database = Database(usuario,contrasena)
+       self.tabla.clear()
+       columnas = ("Nombre","Apellido","Perfil")
+       self.tabla.setHorizontalHeaderLabels(columnas)
+       sql = "select * from adm_clientes"
+       database.cursor.execute(sql)
+       info = database.cursor.fetchall()
+        
+       fila=0
+        #columna=0
+       for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            
+            fila+=1
+    
+    def ventas(self):
+        self.insumos_check.show()
+        self.productos_check.show()
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        self.tabla.clear()
+      
+        
+        self.insumos_check.stateChanged.connect(self.ventas_insumos)
+        self.productos_check.stateChanged.connect(self.ventas_productos)
+            
+    def ventas_insumos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Insumo","Cliente","Empleado","Sucursal","Fecha")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select * from insumos_vendidos;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
+    
+    def ventas_productos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database(usuario,contrasena)
+        self.tabla.clear()
+        columnas = ("Producto","Cliente","Empleado","Sucursal","Fecha")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select * from productos_vendidos;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            
+            fila+=1
+     
+    def productos(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
+       nombre = str(self.nombre_label.text())
+       apellido = str( self.apellido_label.text())
+       contrasena = str(self.password_label.text())
+       usuario = str(nombre + " "+apellido)
+       print(nombre)
+       print(contrasena)
+       print(apellido)
+       print(usuario)
+       database = Database(usuario,contrasena)
+       self.tabla.clear()
+       columnas = ("Nombre","Precio","Producción","Categoria","Caducidad","Punto-Fabricación")
+       self.tabla.setHorizontalHeaderLabels(columnas)
+
+       sql = "select * from producto_vista"
+       database.cursor.execute(sql)
+       info = database.cursor.fetchall()
+       fila=0
+       for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(str(registro[3])))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
+            fila+=1
+    
+    def insumos(self):
+       self.insumos_check.hide()
+       self.productos_check.hide()
+       nombre = str(self.nombre_label.text())
+       apellido = str( self.apellido_label.text())
+       contrasena = str(self.password_label.text())
+       usuario = str(nombre + " "+apellido)
+       print(nombre)
+       print(contrasena)
+       print(apellido)
+       print(usuario)
+       database = Database(usuario,contrasena)
+       self.tabla.clear()
+       columnas = ("Nombre","Cantidad","Unidad_medida","Precio_unidad","Marca","Fecha","Estado_pago","Deuda","IVA","Sucursal")
+       self.tabla.setHorizontalHeaderLabels(columnas)
+       
+       sql = "select * from insumo_vista"
+       database.cursor.execute(sql)
+       info = database.cursor.fetchall()
+        
+       fila=0
+        #columna=0
+       for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(str(registro[3])))
+            self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
+            self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
+            self.tabla.setItem(fila,6,QtWidgets.QTableWidgetItem(registro[6]))
+            self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(str(registro[7])))
+            self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(str(registro[8])))
+            self.tabla.setItem(fila,9,QtWidgets.QTableWidgetItem(registro[9]))
+            fila+=1
             
     def desconectar(self):
         widget.setFixedWidth(500)
@@ -1410,6 +1616,7 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         contrasena = self.password_label.text()
         self.ventana =  mi_contrato(nombre,apellido,contrasena)
         self.ventana.show()
+        
         
 
 
@@ -1458,6 +1665,7 @@ class mi_contrato(QtWidgets.QWidget):#,Ui_MainWindow ):
             self.salario_label.setText("Salario: "+str(atributos[3]))
             self.contratacion_label.setText("Fecha de Contratación: "+atributos[4])
             self.terminacion_label.setText("Fecha de Terminación: "+atributos[5])
+    
             
         
 ## Ventana de Insertar empleado   
@@ -1541,25 +1749,66 @@ class insertar_empleado(QtWidgets.QWidget):#,Ui_MainWindow ):
             
         
         
-        '''if(dia_nacimiento>0 and dia_contratacion>0 and  dia_terminacion >0 and mes_terminacion>0 and mes_contratacion > 0 and dia_nacimiento <=31 and dia_contratacion<=31 and dia_terminacion<=31 and mes_nacimiento <=12 and mes_contratacion<=12 and mes_terminacion<=12 and año_nacimiento>1950 and  año_contratacion>1950 and año_terminacion>1950 and año_nacimiento<2050 and año_contratacion<2050 and año_terminacion < 2050):
-            
-            fecha_nacimiento = conversor_fecha_int_str(dia_nacimiento,mes_nacimiento,año_nacimiento)
-            fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
-            fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
-            print(fecha_nacimiento)
-            print(fecha_contratacion)
-            print(fecha_terminacion)
-        else:
-            print("Datos invalidos")'''
-            
-        #fecha_contratacion = conversor_fecha_int_str(dia_contratacion,mes_contratacion,año_contratacion)
-       # fecha_terminacion = conversor_fecha_int_str(dia_terminacion,mes_terminacion,año_terminacion)
-        #self.
-    #def 
+# Ventana de insertar producto 
+
+class insertar_producto(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_producto.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
         
-       # database=Database(usuario,contrasena)
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
         
-       
+    def insercion(self):
+        
+        dia_produccion = int(self.dia_prod.text())
+        mes_produccion = int(self.mes_prod.text())
+        
+        
+        dia_caducidad = int(self.dia_cad.text())
+        mes_caducidad = int(self.mes_cad.text())
+        
+        
+        
+        try:
+            nombre=str(self.nombre_label.text())
+           
+            categoria = str(self.categoria_label.text())
+            precio = int(self.precio_label.text())
+            precio = str(precio)
+            año_produccion = int(self.ano_prod.text())
+            año_caducidad = int(self.ano_cad.text())
+            print("uwu")
+            
+            if(dia_produccion>0 and dia_caducidad>0  and mes_produccion>0 and mes_caducidad > 0 and dia_produccion<=31 and dia_caducidad<=31  and mes_produccion <=12 and mes_caducidad<=12  and año_produccion>2020 and  año_caducidad>2020  and año_produccion<=2021 and año_caducidad<2023  and nombre!='' and categoria!='' and precio!=''):
+            
+                fecha_produccion = conversor_fecha_int_str(dia_produccion,mes_produccion,año_produccion)
+                fecha_caducidad = conversor_fecha_int_str(dia_caducidad,mes_caducidad,año_caducidad)
+                print("uwu")
+                print(fecha_produccion)
+                print(fecha_caducidad)
+                
+                usuario = self.usuario_label.text()
+                contrasena = self.contrasena_label.text()
+                database=Database(usuario,contrasena)
+            
+                sql = "nuevo_producto"
+                parametros =(nombre,precio,fecha_produccion,fecha_caducidad,categoria)
+        
+                database.cursor.callproc(sql, parametros)
+                database.connection.commit()
+                print("producto registrado")
+
+                self.error_label.setText("Producto Registrado Exitosamente")
+      
+            else: 
+                self.error_label.setText("Datos Invalidos")
+        except:
+            self.error_label.setText("Datos Invalidos") 
 
 
 
