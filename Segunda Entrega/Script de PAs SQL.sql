@@ -203,6 +203,7 @@ DELIMITER ;
 
 
 -- Inserción de empleados
+drop procedure if exists nuevo_empleado;
 DELIMITER $$
 CREATE PROCEDURE nuevo_empleado(idcargo_u int, nombre_u varchar(45),
 apellido_u varchar (45), direccion_u varchar(45),telefono_u varchar(45),
@@ -210,11 +211,13 @@ eps_u varchar(45),ciudad_u varchar(45),fecha_de_nacimiento_u varchar (45),
 fecha_contratacion_u varchar(45),salario_u int,fecha_terminacion_u varchar(45))
 BEGIN
 declare idcontrato_u int default 0;
+START TRANSACTION;
 insert into contrato(NIT,idcargo,fecha_contratacion,salario,fecha_terminacion) 
 values (123456789,idcargo_u,fecha_contratacion_u,salario_u,fecha_terminacion_u);
 select max(idcontrato) into idcontrato_u from contrato;
 insert into empleado(idcontrato,nombre,apellido,direccion,telefono,eps,ciudad,fecha_de_nacimiento)
 values (idcontrato_u,nombre_u,apellido_u,direccion_u,telefono_u,eps_u,ciudad_u,fecha_de_nacimiento_u);
+COMMIT;
 END;
 $$
 DELIMITER ;
