@@ -7,11 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>761</width>
-    <height>566</height>
+    <height>567</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/Bkg/Images/Logo.png</normaloff>:/Bkg/Images/Logo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#centralwidget{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 85, 127, 255), stop:1 rgba(255, 255, 255, 255));
+}
+QWidget#MainWindow{
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 85, 127, 255), stop:1 rgba(255, 255, 255, 255));
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -29,7 +41,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Ventana Funcionario</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Ventana Funcionario&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="usuario_label">
@@ -47,7 +59,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Usuario: </string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Usuario: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="cargo_label">
@@ -65,17 +77,23 @@
      </font>
     </property>
     <property name="text">
-     <string>Cargo: </string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Cargo: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_logout">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>110</y>
-      <width>91</width>
-      <height>31</height>
+      <x>620</x>
+      <y>30</y>
+      <width>111</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius:17px;
+color: rgb(255, 255, 255);
+background-color: rgb(0, 170, 127);
+font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
      <string>Cerrar Sesión</string>
@@ -250,7 +268,7 @@
      <string>Clientes</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_clientes_2">
+   <widget class="QPushButton" name="btn_vinculos">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -272,6 +290,9 @@
       <height>241</height>
      </rect>
     </property>
+    <property name="rowCount">
+     <number>70</number>
+    </property>
     <row>
      <property name="text">
       <string/>
@@ -372,6 +393,56 @@
       <string/>
      </property>
     </row>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
     <column>
      <property name="text">
       <string/>
@@ -431,8 +502,8 @@
    <widget class="QCheckBox" name="productos_check">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>530</y>
+      <x>640</x>
+      <y>480</y>
       <width>70</width>
       <height>17</height>
      </rect>
@@ -444,8 +515,8 @@
    <widget class="QPushButton" name="btn_eliminar">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>460</y>
+      <x>440</x>
+      <y>450</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -457,8 +528,8 @@
    <widget class="QPushButton" name="btn_insertar">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>460</y>
+      <x>330</x>
+      <y>450</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -470,27 +541,14 @@
    <widget class="QCheckBox" name="insumos_check">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>510</y>
+      <x>640</x>
+      <y>460</y>
       <width>91</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>Insumos</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_modificar">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>460</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Modificar</string>
     </property>
    </widget>
   </widget>
