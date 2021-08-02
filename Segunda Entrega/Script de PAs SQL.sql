@@ -263,13 +263,18 @@ DELIMITER ;
 
 -- Insertar producto
 
+drop procedure if exists nuevo_producto;
 DELIMITER $$
-CREATE PROCEDURE nuevo_producto(nombre varchar(45),precio int, fecha_de_produccion varchar(45), 
-fecha_caducidad varchar(45), categoria varchar(45))
+CREATE PROCEDURE nuevo_producto(nombre_u varchar(45),precio_u int, fecha_de_produccion_u varchar(45), 
+fecha_caducidad_u varchar(45), categoria_u varchar(45), sucursal_u varchar(45))
 BEGIN
+declare idsucur int default 0;
+START TRANSACTION;
+select idsucursal into idsucur from sucursal where nombre = sucursal_u;
 insert into producto(nombre, precio, fecha_de_produccion, categoria, fecha_de_caducidad, 
 punto_de_fabricacion)
-values (nombre, precio, fecha_de_produccion,categoria, fecha_caducidad, 1);
-END;
+values (nombre_u, precio_u, fecha_de_produccion_u,categoria_u, fecha_caducidad_u, idsucur );
+COMMIT;
+END; 
 $$
 DELIMITER ;
