@@ -278,3 +278,28 @@ COMMIT;
 END; 
 $$
 DELIMITER ;
+
+
+-- Insertar insumo
+
+drop procedure if exists nuevo_insumo;
+DELIMITER $$
+CREATE PROCEDURE nuevo_insumo(nit_u varchar(45),nombre_u varchar(45),cantidad_u int, u_medida varchar(45), 
+precio_u int, marca_u varchar(45), fecha_u varchar(45),estado_pago varchar(45), 
+cantidad_pagar int, iva_u int,sucursal_u varchar(45))
+BEGIN
+declare idinven int default 0;
+declare nit_g int default 0;
+declare maxi int default 0;
+START TRANSACTION;
+select nit into nit_g from proveedor where nit=nit_u;
+select inventario.idinventario into idinven from sucursal, inventario where sucursal.nombre = sucursal_u and inventario.idsucursal = sucursal.idsucursal;
+insert into insumo(idinventario,nombre, cantidad, unidad_de_medida, precio_por_unidad_de_medida, marca, 
+fecha_de_compra, estado_de_pago, cantidad_a_pagar, iva)
+values (idinven,nombre_u, cantidad_u, u_medida,precio_u, marca_u, fecha_u, estado_pago, cantidad_pagar, iva_u );
+select max(idinsumo) into maxi from insumo;
+insert into adquisicion_insumos(nit,idinsumo) values (nit_g,maxi);
+COMMIT;
+END; 
+$$
+DELIMITER ;
