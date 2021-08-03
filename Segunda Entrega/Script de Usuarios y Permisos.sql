@@ -81,6 +81,12 @@ grant select on ventas_productos_adm to 'Johan Clavijo'@'Localhost';
 grant select on domicilios_productos_adm to 'Johan Clavijo'@'Localhost';
 grant select on domicilios_insumos_adm to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Johan Clavijo'@'Localhost';
+grant select on insumo_vista to 'Johan Clavijo'@'Localhost';
+grant select on producto_vista to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Johan Clavijo'@'Localhost';
 
 
 
@@ -115,6 +121,13 @@ grant select on ventas_productos_adm to 'Camila Urrutia'@'localhost';
 grant select on domicilios_productos_adm to 'Camila Urrutia'@'localhost';
 grant select on domicilios_insumos_adm to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Camila Urrutia'@'localhost';
+grant select on insumo_vista to 'Camila Urrutia'@'localhost';
+grant select on producto_vista to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Camila Urrutia'@'localhost';
+
 
 -- Administrador 3
 grant select on pionono_cakes.adm_contratos to 'Alberto Gutierrez'@'localhost';
@@ -147,6 +160,13 @@ grant select on ventas_productos_adm to 'Alberto Gutierrez'@'localhost';
 grant select on domicilios_productos_adm to 'Alberto Gutierrez'@'localhost';
 grant select on domicilios_insumos_adm to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Alberto Gutierrez'@'localhost';
+grant select on insumo_vista to 'Alberto Gutierrez'@'localhost';
+grant select on producto_vista to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Alberto Gutierrez'@'localhost';
+
 
 -- Permisos de Funcionarios
 
