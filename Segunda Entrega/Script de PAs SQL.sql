@@ -320,3 +320,18 @@ COMMIT;
 END; 
 $$
 DELIMITER ;
+
+
+
+
+-- Insertar Cliente
+drop procedure if exists nuevo_cliente;
+DELIMITER $$
+CREATE PROCEDURE nuevo_cliente(nombre_u varchar(45),apellido_u varchar(45),perfil_u varchar(45))
+BEGIN
+START TRANSACTION;
+insert into cliente(nombre, apellido, perfil) values (nombre_u,apellido_u, perfil_u);
+COMMIT;
+END; 
+$$
+DELIMITER ;
