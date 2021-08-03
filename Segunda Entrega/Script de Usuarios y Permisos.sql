@@ -81,13 +81,17 @@ grant select on ventas_productos_adm to 'Johan Clavijo'@'Localhost';
 grant select on domicilios_productos_adm to 'Johan Clavijo'@'Localhost';
 grant select on domicilios_insumos_adm to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Johan Clavijo'@'Localhost';
-grant select on insumo_vista to 'Johan Clavijo'@'Localhost';
-grant select on producto_vista to 'Johan Clavijo'@'Localhost';
+grant select on pionono_cakes.insumo_vista to 'Johan Clavijo'@'Localhost';
+grant select on pionono_cakes.producto_vista to 'Johan Clavijo'@'Localhost';
+
 grant execute on procedure pionono_cakes.nueva_venta_producto to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Johan Clavijo'@'Localhost';
-grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Johan Clavijo'@'Localhost';
 grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Johan Clavijo'@'Localhost';
 
+grant execute on procedure pionono_cakes.nuevo_producto to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Johan Clavijo'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Johan Clavijo'@'Localhost';
 
 
 -- Administrador 2
@@ -121,12 +125,18 @@ grant select on ventas_productos_adm to 'Camila Urrutia'@'localhost';
 grant select on domicilios_productos_adm to 'Camila Urrutia'@'localhost';
 grant select on domicilios_insumos_adm to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Camila Urrutia'@'localhost';
-grant select on insumo_vista to 'Camila Urrutia'@'localhost';
-grant select on producto_vista to 'Camila Urrutia'@'localhost';
+grant select on pionono_cakes.producto_vista to 'Camila Urrutia'@'localhost';
+grant select on pionono_cakes.insumo_vista to 'Camila Urrutia'@'localhost';
+
 grant execute on procedure pionono_cakes.nueva_venta_producto to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Camila Urrutia'@'localhost';
-grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Camila Urrutia'@'localhost';
 grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Camila Urrutia'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Camila Urrutia'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Camila Urrutia'@'localhost';
+
 
 
 -- Administrador 3
@@ -162,10 +172,15 @@ grant select on domicilios_insumos_adm to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Alberto Gutierrez'@'localhost';
 grant select on insumo_vista to 'Alberto Gutierrez'@'localhost';
 grant select on producto_vista to 'Alberto Gutierrez'@'localhost';
+
 grant execute on procedure pionono_cakes.nueva_venta_producto to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Alberto Gutierrez'@'localhost';
-grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Alberto Gutierrez'@'localhost';
 grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Alberto Gutierrez'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Alberto Gutierrez'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Alberto Gutierrez'@'localhost';
 
 
 -- Permisos de Funcionarios
@@ -194,7 +209,16 @@ grant select on pionono_cakes.sucursales_info to 'Juan Ótero'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Juan Ótero'@'localhost';
 grant select on producto_vista to 'Juan Ótero'@'localhost';
 grant select on insumo_vista to 'Juan Ótero'@'localhost';
+grant select on ventas_productos_adm to 'Juan Ótero'@'localhost';
 
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Juan Ótero'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Juan Ótero'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Juan Ótero'@'localhost';
 
 
 -- Funcionario 2
@@ -221,6 +245,16 @@ grant select on pionono_cakes.sucursales_info to 'Juana Parra'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Juana Parra'@'localhost';
 grant select on producto_vista to 'Juana Parra'@'localhost';
 grant select on insumo_vista to 'Juana Parra'@'localhost';
+grant select on ventas_productos_adm to 'Juana Parra'@'localhost';
+
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Juana Parra'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Juana Parra'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Juana Parra'@'localhost';
 
 
 
@@ -248,7 +282,17 @@ grant select on pionono_cakes.sucursales_info to 'Johan Piñeda'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Johan Piñeda'@'localhost';
 grant select on producto_vista to 'Johan Piñeda'@'localhost';
 grant select on insumo_vista to 'Johan Piñeda'@'localhost';
+grant select on ventas_productos_adm to 'Johan Piñeda'@'localhost';
 
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Johan Piñeda'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Johan Piñeda'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Johan Piñeda'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Johan Piñeda'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Johan Piñeda'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Johan Piñeda'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Johan Piñeda'@'localhost';
 
 
 -- Funcionario 4
@@ -275,6 +319,17 @@ grant select on pionono_cakes.sucursales_info to 'Fernando Pinzón'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Fernando Pinzón'@'localhost';
 grant select on producto_vista to 'Fernando Pinzón'@'localhost';
 grant select on insumo_vista to 'Fernando Pinzón'@'localhost';
+grant select on ventas_productos_adm to 'Fernando Pinzón'@'localhost';
+
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Fernando Pinzón'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Fernando Pinzón'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Fernando Pinzón'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Fernando Pinzón'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Fernando Pinzón'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Fernando Pinzón'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Fernando Pinzón'@'localhost';
 
 
 
@@ -302,7 +357,18 @@ grant select on pionono_cakes.sucursales_info to 'Luz Villamil'@'localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Luz Villamil'@'localhost';
 grant select on producto_vista to 'Luz Villamil'@'localhost';
 grant select on insumo_vista to 'Luz Villamil'@'localhost';
+grant select on ventas_productos_adm to 'Luz Villamil'@'localhost';
 
+
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Luz Villamil'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Luz Villamil'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Luz Villamil'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Luz Villamil'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_producto to 'Luz Villamil'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_insumo to 'Luz Villamil'@'localhost';
+
+grant execute on procedure pionono_cakes.nuevo_cliente to 'Luz Villamil'@'localhost';
 
 -- Permisos Domiciliarios
 
@@ -323,6 +389,15 @@ grant select on producto_vista to 'Ivan Restrepo'@'localhost';
 grant select on insumo_vista to 'Ivan Restrepo'@'localhost';
 
 
+
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Ivan Restrepo'@'localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Ivan Restrepo'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Ivan Restrepo'@'localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Ivan Restrepo'@'localhost';
+
+
+
+
 -- Domiciliario 2
 grant select on pionono_cakes.productos_vendidos to 'Lucia Torres'@'Localhost';
 grant select on pionono_cakes.insumos_vendidos to 'Lucia Torres'@'Localhost';
@@ -338,3 +413,10 @@ grant select on adm_clientes to 'Lucia Torres'@'Localhost';
 grant execute on procedure pionono_cakes.producto_sucursal to 'Lucia Torres'@'Localhost';
 grant select on producto_vista to 'Lucia Torres'@'Localhost';
 grant select on insumo_vista to 'Lucia Torres'@'Localhost';
+grant select on ventas_productos_adm to 'Lucia Torres'@'Localhost';
+
+grant execute on procedure pionono_cakes.nueva_venta_producto to 'Lucia Torres'@'Localhost';
+grant execute on procedure pionono_cakes.nueva_venta_insumo to 'Lucia Torres'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_producto to 'Lucia Torres'@'Localhost';
+grant execute on procedure pionono_cakes.nuevo_domicilio_insumo to 'Lucia Torres'@'Localhost';
+
