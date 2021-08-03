@@ -9,8 +9,6 @@ qtCreatorFile = "login.ui" # Nombre del archivo aquí.
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 
-
-
 class login(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
@@ -86,6 +84,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cargo_label.setText("Cargo: "+cargo)
         self.user_label.setText(usuario)
         self.nombre_label.setText(nombre)
+        self.btn_eliminar.hide()
         self.apellido_label.setText(apellido)
         self.password_label.setText(contrasena)
         self.btn_logout.clicked.connect(self.desconectar)
@@ -127,9 +126,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         apellido = self.apellido_label.text()
         contrasena = self.password_label.text()
         self.ventana =  mi_info(nombre,apellido,contrasena)
-       # mi_info(nombre,apellido,contrasena)
-        #self.ui.setupUi(self.ventana)
-        #self.ventana.exec_()
+      
         self.ventana.show()
     
     def mi_contrato(self):
@@ -142,8 +139,11 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def empleados(self):
        # usuario=nombre+' '+contrasena
+        self.btn_insertar.show()
+        self.btn_eliminar.show()
         self.insumos_check.hide()
         self.productos_check.hide()
+        self.btn_eliminar.clicked.connect(self.eliminar_empleado)
         self.tabla.clear()
         columnas=("Nombre","Apellido","Direccion","Telefono","EPS","Ciudad","Fecha-Nacimiento"," ","")
         self.tabla.setHorizontalHeaderLabels(columnas)
@@ -184,6 +184,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
     #Se cambió el SELECT de una tabla a una vista
     
     def sucursales(self):
+        self.btn_eliminar.hide()
+        self.btn_insertar.hide()
         self.insumos_check.hide()
         self.productos_check.hide()
         self.tabla.clear()
@@ -213,8 +215,12 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
     
     def ventas(self):
+        self.btn_insertar.show()
+        self.btn_eliminar.hide()
+        self.tabla.clear()
         self.insumos_check.show()
         self.productos_check.show()
+        self.btn_insertar.clicked.connect(self.insertar_venta)
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -231,6 +237,13 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.insumos_check.stateChanged.connect(self.ventas_insumos)
         self.productos_check.stateChanged.connect(self.ventas_productos)
         
+    
+    def insertar_venta(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_venta(nombre,apellido,contrasena)
+        self.ventana.show()
     
     
     def ventas_insumos(self):
@@ -290,6 +303,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
     
     def domicilio(self):
+        self.btn_eliminar.hide()
+        self.btn_insertar.hide()
         self.insumos_check.show()
         self.productos_check.show()
         nombre = str(self.nombre_label.text())
@@ -333,6 +348,7 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
     
     def domicilios_productos(self):
+        self.btn_insertar.show()
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -359,8 +375,11 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def maquinaria(self):
+        self.btn_insertar.show()
+        self.btn_eliminar.hide()
         self.insumos_check.hide()
         self.productos_check.hide()
+        self.btn_insertar.clicked.connect(self.insertar_equipo)
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -391,6 +410,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         
         
     def insumos(self):
+       self.btn_insertar.show()
+       self.btn_eliminar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
        self.btn_insertar.clicked.connect(self.insertar_insumo)
@@ -427,6 +448,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def productos(self):
+       self.btn_insertar.show()
+       self.btn_eliminar.hide()
        self.btn_insertar.clicked.connect(self.insertar_producto)
        self.insumos_check.hide()
        self.productos_check.hide()
@@ -462,6 +485,13 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         contrasena = self.password_label.text()
         self.ventana =  insertar_producto(nombre,apellido,contrasena)
         self.ventana.show()
+        
+    def insertar_equipo(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_equipo(nombre,apellido,contrasena)
+        self.ventana.show()
     
     def insertar_insumo(self):
         nombre = self.nombre_label.text()
@@ -471,6 +501,8 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ventana.show()
         
     def contratos(self):
+       self.btn_eliminar.hide()
+       self.btn_insertar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -503,7 +535,11 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
        
         
     def proveedores(self): 
+        self.btn_eliminar.hide()
+        self.btn_insertar.show()
+        self.btn_insertar.clicked.connect(self.insertar_proveedor)
         self.insumos_check.hide()
+        
         self.productos_check.hide()
         self.tabla.clear()
         nombre = str(self.nombre_label.text())
@@ -535,10 +571,20 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,7,QtWidgets.QTableWidgetItem(registro[7]))
             self.tabla.setItem(fila,8,QtWidgets.QTableWidgetItem(registro[8]))
             fila+=1
+            
+    def insertar_proveedor(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_proveedor(nombre,apellido,contrasena)
+        self.ventana.show()
    
-    def clientes(self):
+    def clientes(self): 
+       self.btn_insertar.show()
+       self.btn_eliminar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
+       self.btn_insertar.clicked.connect(self.insertar_cliente)
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -565,7 +611,21 @@ class Ventana_jefe(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
         
-
+    def insertar_cliente(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_cliente(nombre,apellido,contrasena)
+        self.ventana.show()
+        
+    def eliminar_empleado(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  eliminar_empleado(nombre,apellido,contrasena)
+        self.ventana.show()
+        
+    
 
 ## Ventana Administrador
 qtCreatorFile3="Ventana_Administrador.ui"
@@ -584,6 +644,8 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         widget.setFixedHeight(600)
         self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo+" de "+sucursal)
+        self.btn_eliminar.hide()
+        self.btn_modificar.hide()
         self.user_label.setText(usuario)
         self.nombre_label.setText(nombre)
         self.apellido_label.setText(apellido)
@@ -632,7 +694,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         self.insumos_check.hide()
         self.productos_check.hide()
         self.btn_insertar.hide()
-        self.btn_eliminar.hide()
+        #self.btn_eliminar.hide()
         self.tabla.clear()
         columnas = ("Categoría","Nombre","Ubicación","Ciudad","Administrador, Telefono")
         self.tabla.setHorizontalHeaderLabels(columnas)
@@ -657,8 +719,10 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
         
 
     def ventas(self):
+            self.btn_insertar.show()
             self.insumos_check.show()
             self.productos_check.show()
+            self.btn_insertar.clicked.connect(self.insertar_venta)
             nombre = str(self.nombre_label.text())
             apellido = str( self.apellido_label.text())
             contrasena = str(self.password_label.text())
@@ -666,6 +730,13 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.clear()
             self.insumos_check.stateChanged.connect(self.ventas_insumos)
             self.productos_check.stateChanged.connect(self.ventas_productos)
+    
+    def insertar_venta(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_venta(nombre,apellido,contrasena)
+        self.ventana.show()
         
     def ventas_insumos(self):
        
@@ -721,6 +792,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1      
 
     def domicilio(self):
+        self.btn_insertar.hide()
         self.insumos_check.show()
         self.productos_check.show()
         nombre = str(self.nombre_label.text())
@@ -786,6 +858,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
 
     def maquinaria(self):
+        self.btn_insertar.hide()
         self.insumos_check.hide()
         self.productos_check.hide()
         nombre = str(self.nombre_label.text())
@@ -819,8 +892,10 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
                fila+=1 
 
     def insumos(self):
+       self.btn_insertar.show()
        self.insumos_check.hide()
        self.productos_check.hide()
+       self.btn_insertar.clicked.connect(self.insertar_insumo)
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -853,11 +928,20 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,9,QtWidgets.QTableWidgetItem(str(registro[9])))
             self.tabla.setItem(fila,10,QtWidgets.QTableWidgetItem(str(registro[10])))
             fila+=1
-       
+            
+    
+    def insertar_insumo(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_insumo(nombre,apellido,contrasena)
+        self.ventana.show()  
 
     def productos(self):
+       self.btn_insertar.show()
        self.insumos_check.hide()
        self.productos_check.hide()
+       self.btn_insertar.clicked.connect(self.insertar_producto)
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
        contrasena = str(self.password_label.text())
@@ -883,12 +967,21 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,4,QtWidgets.QTableWidgetItem(registro[4]))
             self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
             fila+=1
+            
+    def insertar_producto(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_producto(nombre,apellido,contrasena)
+        self.ventana.show()
 
     def clientes(self):
        self.insumos_check.hide()
        self.productos_check.hide()
-       self.btn_insertar.hide()
+       self.btn_insertar.show()
        self.btn_eliminar.hide()
+       self.btn_insertar.show()
+       self.btn_insertar.clicked.connect(self.insertar_cliente)
 
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
@@ -914,12 +1007,20 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(str(registro[1])))
             self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
             fila+=1    
+            
+    
+    def insertar_cliente(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_cliente(nombre,apellido,contrasena)
+        self.ventana.show()  
     
     def contratos(self):
        self.insumos_check.hide()
        self.productos_check.hide()
        self.btn_insertar.hide()
-       self.btn_eliminar.hide()
+       #self.btn_eliminar.hide()
 
        nombre = str(self.nombre_label.text())
        apellido = str( self.apellido_label.text())
@@ -950,6 +1051,7 @@ class Ventana_admin(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
 
     def proveedores(self): 
+        self.btn_insertar.hide()
         self.insumos_check.hide()
         self.productos_check.hide()
         self.tabla.clear()
@@ -994,6 +1096,8 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)  
         widget.setFixedWidth(760)
         widget.setFixedHeight(570)
+        self.btn_vinculos.hide()
+        self.btn_eliminar.hide()
         self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo)
         self.user_label.setText(usuario)
@@ -1048,6 +1152,8 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
     def ventas(self):
         self.insumos_check.show()
         self.productos_check.show()
+        self.btn_insertar.show()
+        self.btn_insertar.clicked.connect(self.insertar_venta)
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -1061,6 +1167,13 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.insumos_check.stateChanged.connect(self.ventas_insumos)
         self.productos_check.stateChanged.connect(self.ventas_productos)
+        
+    def insertar_venta(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_venta(nombre,apellido,contrasena)
+        self.ventana.show()
     
     def ventas_productos(self):
        
@@ -1118,7 +1231,8 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def productos(self):
-       #self.btn_insertar.clicked.connect(self.insertar_producto)
+       self.btn_insertar.show()
+       self.btn_insertar.clicked.connect(self.insertar_producto)
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1147,6 +1261,13 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,5,QtWidgets.QTableWidgetItem(registro[5]))
             fila+=1
             
+    def insertar_producto(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_producto(nombre,apellido,contrasena)
+        self.ventana.show()
+        
     def domicilios(self):
         self.btn_insertar.hide()
         self.btn_eliminar.hide()
@@ -1254,6 +1375,8 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
         
     def insumos(self):
+       self.btn_insertar.show()
+       self.btn_insertar.clicked.connect(self.insertar_insumo)
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1288,10 +1411,17 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,10,QtWidgets.QTableWidgetItem(str(registro[10])))
             fila+=1
         
-            
+    def insertar_insumo(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_insumo(nombre,apellido,contrasena)
+        self.ventana.show()        
           
 
     def clientes(self):
+       self.btn_insertar.show()
+       self.btn_insertar.clicked.connect(self.insertar_cliente)
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1318,6 +1448,13 @@ class Ventana_funcionario(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(str(registro[2])))
             
             fila+=1
+            
+    def insertar_cliente(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_cliente(nombre,apellido,contrasena)
+        self.ventana.show()  
             
     def vinculos(self):
        self.insumos_check.hide()
@@ -1388,6 +1525,8 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)  
         widget.setFixedWidth(790)
         widget.setFixedHeight(580)
+        self.btn_insertar.hide()
+        self.btn_eliminar.hide()
         self.usuario_label.setText("Usuario: "+usuario)
         self.cargo_label.setText("Cargo: "+cargo)
         self.user_label.setText(usuario)
@@ -1402,6 +1541,7 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btn_ventas.clicked.connect(self.ventas)
         self.btn_productos.clicked.connect(self.productos)
         self.btn_insumos.clicked.connect(self.insumos)
+        self.btn_domicilios.clicked.connect(self.domicilios)
     
     def sucursales(self):
         self.insumos_check.hide()
@@ -1437,6 +1577,8 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
     
     def clientes(self):
+       self.btn_insertar.hide()
+       self.btn_eliminar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1467,6 +1609,8 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
     def ventas(self):
         self.insumos_check.show()
         self.productos_check.show()
+        self.btn_insertar.show()
+        self.btn_insertar.clicked.connect(self.insertar_venta)
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
         contrasena = str(self.password_label.text())
@@ -1481,6 +1625,13 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.insumos_check.stateChanged.connect(self.ventas_insumos)
         self.productos_check.stateChanged.connect(self.ventas_productos)
             
+    def insertar_venta(self):
+        nombre = self.nombre_label.text()
+        apellido = self.apellido_label.text()
+        contrasena = self.password_label.text()
+        self.ventana =  insertar_venta(nombre,apellido,contrasena)
+        self.ventana.show()
+        
     def ventas_insumos(self):
         nombre = str(self.nombre_label.text())
         apellido = str( self.apellido_label.text())
@@ -1536,6 +1687,7 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
      
     def productos(self):
+       self.btn_insertar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1565,6 +1717,7 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
             fila+=1
     
     def insumos(self):
+       self.btn_insertar.hide()
        self.insumos_check.hide()
        self.productos_check.hide()
        nombre = str(self.nombre_label.text())
@@ -1623,6 +1776,77 @@ class Ventana_domiciliario(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ventana =  mi_contrato(nombre,apellido,contrasena)
         self.ventana.show()
         
+    def domicilios(self):
+        self.btn_insertar.hide()
+        self.btn_eliminar.hide()
+        
+        self.insumos_check.show()
+        self.productos_check.show()
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        self.tabla.clear()
+        columnas = ("Producto","Nombre-Cliente","Apellido-Cliente","Nombre-Empleado","Apellido-Empleado","Sucursal"," ")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        self.insumos_check.stateChanged.connect(self.domicilios_insumos)
+        self.productos_check.stateChanged.connect(self.domicilios_productos)
+    
+    def domicilios_insumos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database("root","1234")
+        self.tabla.clear()
+        columnas = ("Insumo","Cliente","Domiciliario","Dirección")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select insumo.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), domicilio.direccion_entrega  from domicilio,empleado,venta,cliente,venta_insumos,insumo where domicilio.idventa = venta.idventa and cliente.idcliente = domicilio.idcliente and empleado.idempleado = domicilio.idempleado and venta_insumos.idventa = domicilio.idventa and insumo.idinsumo = venta_insumos.idinsumo;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            
+            fila+=1
+    
+    def domicilios_productos(self):
+        nombre = str(self.nombre_label.text())
+        apellido = str( self.apellido_label.text())
+        contrasena = str(self.password_label.text())
+        usuario = str(nombre + " "+apellido)
+        print(nombre)
+        print(contrasena)
+        print(apellido)
+        print(usuario)
+        database = Database("root","1234")
+        self.tabla.clear()
+        columnas = ("Producto","Cliente","Domiciliario","Dirección")
+        self.tabla.setHorizontalHeaderLabels(columnas)
+        sql = "select producto.nombre, concat(cliente.nombre,' ',cliente.apellido) , concat(empleado.nombre,' ',empleado.apellido), domicilio.direccion_entrega  from domicilio,empleado,venta,cliente,venta_productos,producto where domicilio.idventa = venta.idventa and cliente.idcliente = domicilio.idcliente and empleado.idempleado = domicilio.idempleado and venta_productos.idventa = domicilio.idventa and producto.idproducto = venta_productos.idproducto;"
+        database.cursor.execute(sql)
+        info = database.cursor.fetchall()
+        fila=0
+        #columna=0
+        for registro in info:
+            self.tabla.setItem(fila,0,QtWidgets.QTableWidgetItem(registro[0]))
+            self.tabla.setItem(fila,1,QtWidgets.QTableWidgetItem(registro[1]))
+            self.tabla.setItem(fila,2,QtWidgets.QTableWidgetItem(registro[2]))
+            self.tabla.setItem(fila,3,QtWidgets.QTableWidgetItem(registro[3]))
+            
+            fila+=1
         
 
 
@@ -1878,9 +2102,303 @@ class insertar_insumo(QtWidgets.QWidget):#,Ui_MainWindow ):
                 self.error_label.setText("Datos Invalidos")
         except:
             self.error_label.setText("Datos Invalidos") 
+
+
+
+# Ventana de insertar proveedor
+
+class insertar_proveedor(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_proveedor.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+        
+    def insercion(self):
+        print("entro")
+        
+        try:
+            nombre=str(self.nombre_label.text())
+            nit = str(self.nit_label.text())
+            razon = str(self.razon_label.text())
+            ubicacion = str(self.ubicacion_label.text())
+            persona = str(self.persona_label.text())
+            telefono = str(self.telefono_label.text())
+            categoria = str(self.categoria_label.text())
+            terminos = str(self.terminos_label.text())
+            email = str(self.email_label.text())
+            
+            
+            print("uwu")
+                
+            usuario = self.usuario_label.text()
+            contrasena = self.contrasena_label.text()
+            database=Database(usuario,contrasena)
+        
+            sql = "nuevo_proveedor"
+            parametros =(nit,nombre,razon,ubicacion,persona,telefono,categoria,terminos,email)
+    
+            database.cursor.callproc(sql, parametros)
+            database.connection.commit()
+            print("proveedor registrado")
+
+            self.error_label.setText("Proveedor Registrado Exitosamente")
+      
+            
+        except:
+            self.error_label.setText("Datos Invalidos") 
             
 
 
+# Ventana de insertar cliente
+
+class insertar_cliente(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_cliente.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+        
+    def insercion(self):
+        print("entro")
+        try:
+            nombre=str(self.nombre_label.text())
+            apellido = str(self.apellido_label.text())
+            perfil = str(self.perfil_label.text())
+            
+            
+            print("uwu")
+                
+            usuario = self.usuario_label.text()
+            contrasena = self.contrasena_label.text()
+            database=Database(usuario,contrasena)
+        
+            sql = "nuevo_cliente"
+            parametros =(nombre,apellido,perfil)
+    
+            database.cursor.callproc(sql, parametros)
+            database.connection.commit()
+            print("cliente registrado")
+
+            self.error_label.setText("Cliente Registrado Exitosamente")
+      
+            
+        except:
+            self.error_label.setText("Datos Invalidos") 
+            
+            
+# Insertar Insertar Maquinaría y Equipo
+
+class insertar_equipo(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_maquinaria.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+        
+    def insercion(self):
+        
+        dia_compra = int(self.dia_buy.text())
+        mes_compra = int(self.mes_buy.text())
+        
+        
+        
+        try:
+            nombre=str(self.nombre_label.text())
+            precio = int(self.precio_label.text())
+            nit = str(self.nit_label.text())
+            cantidad = int(self.cantidad_label.text())
+            año_compra = int(self.ano_buy.text())
+            marca = str(self.marca_label.text())
+            garantia = str(self.garantia_label.text())
+            estado_pago = str(self.estado_label.text())
+            sucursal = str(self.sucursal_label.text())
+            iva = int(self.iva_label.text())
+            
+            print("uwu")
+            
+            if(dia_compra>0 and mes_compra>0  and año_compra>2020 and  dia_compra<=31 and mes_compra <=12 and año_compra <=2021 and cantidad!='' and nombre!='' and nit!='' and cantidad!=''  and marca!='' and estado_pago!='' and cantidad != '' and sucursal != ''):
+            
+                fecha_compra = conversor_fecha_int_str(dia_compra,mes_compra,año_compra)
+                
+                print("uwu")
+                print(fecha_compra)
+
+                
+                usuario = self.usuario_label.text()
+                contrasena = self.contrasena_label.text()
+                database=Database(usuario,contrasena)
+            
+                sql = "nuevo_equipo"
+                parametros =(nit,nombre,precio,marca, garantia, fecha_compra,estado_pago,cantidad,iva,sucursal)
+        
+                database.cursor.callproc(sql, parametros)
+                database.connection.commit()
+                print("equipo registrado")
+
+                self.error_label.setText("Equipo Registrado Exitosamente")
+      
+            else: 
+                self.error_label.setText("Datos Invalidos")
+        except:
+            self.error_label.setText("Datos Invalidos") 
+
+
+
+# Insertar venta
+
+class insertar_venta(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_venta.ui",self)
+        self.direccion_label.hide()
+        self.Domicilio_Box.stateChanged.connect(self.check)
+
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+
+
+    def check(self):
+        self.direccion_label.show()
+        self.direccion.show()
+        self.Domicilio_Box.stateChanged.connect(self.again)
+        self.insertar.clicked.connect(self.insercion)
+
+
+    def again(self):
+        self.direccion_label.hide()
+        self.direccion.hide()
+        self.Domicilio_Box.stateChanged.connect(self.check)
+        self.insertar.clicked.connect(self.insercion)
+
+
+
+
+    def insercion(self):
+        
+        dia_compra = int(self.dia_buy.text())
+        mes_compra = int(self.mes_buy.text())
+        
+        
+        
+    
+        id_elemento=str(self.elemento_label.text())
+        cliente = str(self.cliente_label.text())
+        sucursal = str(self.sucursal_label.text())
+        año_compra = int(self.ano_buy.text())
+        
+        
+        if(dia_compra > 0 and mes_compra > 0  and año_compra > 2020 and  dia_compra <= 31 and mes_compra <= 12 and año_compra <= 2021 and id_elemento != '' and cliente != '' and sucursal != ''):
+        
+            fecha_compra = conversor_fecha_int_str (dia_compra, mes_compra, año_compra)
+            
+            print("uwu")
+            print(fecha_compra)
+
+            
+            usuario = self.usuario_label.text()
+            contrasena = self.contrasena_label.text()
+            database=Database(usuario,contrasena)
+            if self.Domicilio_Box.isChecked():
+                direccion = str(self.direccion_label.text())
+                if self.Insumo_Box.isChecked():
+                    sql = "nuevo_domicilio_insumo"
+                    parametros = ( usuario, cliente, sucursal, fecha_compra, id_elemento, direccion)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Domicilio registrado")
+                    self.error_label.setText("Domicilio Registrado Exitosamente")
+                elif self.Producto_Box.isChecked():
+                    sql = "nuevo_domicilio_producto"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento, direccion)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Domicilio registrado")
+                    self.error_label.setText("Domicilio Registrado Exitosamente")
+                else:
+                    self.error_label.setText("Datos Invalidos")
+
+            else:
+                if self.Insumo_Box.isChecked():
+                    sql = "nueva_venta_insumo"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Venta registrada")
+                    self.error_label.setText("Venta Registrada Exitosamente")
+                elif self.Producto_Box.isChecked():
+                    sql = "nueva_venta_producto"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Venta registrada")
+                    self.error_label.setText("Venta Registrada Exitosamente")
+                else:
+                    self.error_label.setText("Datos Invalidos")
+        else: 
+            self.error_label.setText("Datos Invalidos")
+     
+            self.error_label.setText("Datos Invalidos") 
+
+
+
+
+# Ventana de  eliminar empleado
+
+class eliminar_empleado(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("eliminar_empleado.ui",self)
+        #Ui_MainWindow.__init__(self)
+        #self.setupUi(self)
+        
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+        
+    def insercion(self):
+        
+        try:
+            nombre=str(self.nombre_label.text())
+            apellido = str(self.apellido_label.text())
+            
+            
+            print("uwu")
+                
+            usuario = self.usuario_label.text()
+            contrasena = self.contrasena_label.text()
+            database=Database(usuario,contrasena)
+        
+            sql = "despedir"
+            parametros =(nombre,apellido)
+    
+            database.cursor.callproc(sql, parametros)
+            database.connection.commit()
+            print("Empleado desvinculado")
+
+            self.error_label.setText("Empleado Desvinculado Exitosamente")
+      
+            
+        except:
+            self.error_label.setText("Datos Invalidos")           
 ## Conexión y Funciones sobre la base de Datos
 
 class Database:
