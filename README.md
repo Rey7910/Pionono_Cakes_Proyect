@@ -5,3 +5,6 @@
 ##Desarrolladores:
 ### - Reinaldo Toledo Leguizamón
 ### - Santiago Hernández Chaparro
+
+- Aquí se encuentran todos los scripts de SQL necesarios para la ejecución de la aplicación.
+- En la carpeta 'Entrega final' se encuentran todos los archivos de interfaces junto con el código de python de la ejecución
