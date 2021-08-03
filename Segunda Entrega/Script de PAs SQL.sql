@@ -433,3 +433,19 @@ END IF;
 END;
 $$
 DELIMITER ;
+
+
+
+-- Eliminar Empleado
+drop procedure if exists despedir;
+DELIMITER $$
+CREATE PROCEDURE despedir(nombre_u varchar(45),apellido_u varchar(45))
+BEGIN
+START TRANSACTION;
+set @id = 0;
+select idcontrato into @id from empleado where nombre=nombre_u and apellido = apellido_u;
+delete from empleado where idcontrato = @id;
+COMMIT;
+END; 
+$$
+DELIMITER ;
