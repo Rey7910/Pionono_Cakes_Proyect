@@ -1880,7 +1880,101 @@ class insertar_insumo(QtWidgets.QWidget):#,Ui_MainWindow ):
             self.error_label.setText("Datos Invalidos") 
             
 
+class insertar_venta(QtWidgets.QWidget):#,Ui_MainWindow ):
+    def __init__(self,nombre,apellido,contrasena):
+        QtWidgets.QWidget.__init__(self)
+        uic.loadUi("insertar_venta.ui",self)
+        self.direccion_label.hide()
+        self.Domicilio_Box.stateChanged.connect(self.check)
 
+        usuario = nombre+' '+apellido
+        self.usuario_label.setText(usuario)
+        self.contrasena_label.setText(contrasena)
+        self.insertar.clicked.connect(self.insercion)
+
+
+    def check(self):
+        self.direccion_label.show()
+        self.direccion.show()
+        self.Domicilio_Box.stateChanged.connect(self.again)
+        self.insertar.clicked.connect(self.insercion)
+
+
+    def again(self):
+        self.direccion_label.hide()
+        self.direccion.hide()
+        self.Domicilio_Box.stateChanged.connect(self.check)
+        self.insertar.clicked.connect(self.insercion)
+
+
+
+
+    def insercion(self):
+        
+        dia_compra = int(self.dia_buy.text())
+        mes_compra = int(self.mes_buy.text())
+        
+        
+        
+    
+        id_elemento=str(self.elemento_label.text())
+        cliente = str(self.cliente_label.text())
+        sucursal = str(self.sucursal_label.text())
+        año_compra = int(self.ano_buy.text())
+        
+        
+        if(dia_compra > 0 and mes_compra > 0  and año_compra > 2020 and  dia_compra <= 31 and mes_compra <= 12 and año_compra <= 2021 and id_elemento != '' and cliente != '' and sucursal != ''):
+        
+            fecha_compra = conversor_fecha_int_str (dia_compra, mes_compra, año_compra)
+            
+            print("uwu")
+            print(fecha_compra)
+
+            
+            usuario = self.usuario_label.text()
+            contrasena = self.contrasena_label.text()
+            database=Database(usuario,contrasena)
+            if self.Domicilio_Box.isChecked():
+                direccion = str(self.direccion_label.text())
+                if self.Insumo_Box.isChecked():
+                    sql = "nuevo_domicilio_insumo"
+                    parametros = ( usuario, cliente, sucursal, fecha_compra, id_elemento, direccion)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Domicilio registrado")
+                    self.error_label.setText("Domicilio Registrado Exitosamente")
+                elif self.Producto_Box.isChecked():
+                    sql = "nuevo_domicilio_producto"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento, direccion)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Domicilio registrado")
+                    self.error_label.setText("Domicilio Registrado Exitosamente")
+                else:
+                    self.error_label.setText("Datos Invalidos")
+
+            else:
+                if self.Insumo_Box.isChecked():
+                    sql = "nueva_venta_insumo"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Venta registrada")
+                    self.error_label.setText("Venta Registrada Exitosamente")
+                elif self.Producto_Box.isChecked():
+                    sql = "nueva_venta_producto"
+                    parametros =( usuario, cliente, sucursal, fecha_compra, id_elemento)
+                    database.cursor.callproc(sql, parametros)
+                    database.connection.commit()
+                    print("Venta registrada")
+                    self.error_label.setText("Venta Registrada Exitosamente")
+                else:
+                    self.error_label.setText("Datos Invalidos")
+        else: 
+            self.error_label.setText("Datos Invalidos")
+     
+            self.error_label.setText("Datos Invalidos") 
+            
 ## Conexión y Funciones sobre la base de Datos
 
 class Database:
