@@ -377,7 +377,7 @@ insert into venta (idEmpleado, idCliente, idSucursal, Fecha)
 values (@Empleadoid, @Clienteid, idSucursal, Fecha);
 SELECT max(venta.idventa) INTO @ven_id FROM venta;
 INSERT INTO Venta_Insumos VALUES (@ven_id, id_Insumo);
-SELECT count(Venta_Productos.idVenta) INTO @conteo FROM Venta_Insumos WHERE Venta_Productos.idInsumo = id_Insumo;
+SELECT count(Venta_Insumos.idVenta) INTO @conteo FROM Venta_Insumos WHERE Venta_Insumos.idInsumo = id_Insumo;
 IF @conteo > 1 THEN ROLLBACK;
 ELSE COMMIT;
 END IF;
@@ -426,7 +426,7 @@ values (@Empleadoid, @Clienteid, idSucursal, Fecha);
 SELECT max(venta.idventa) INTO @ven_id FROM venta;
 INSERT INTO Domicilio (idCliente, idEmpleado, idVenta, Direccion_entrega) VALUES (@Clienteid, @Empleadoid, @ven_id, Direccion);
 INSERT INTO Venta_Insumos VALUES (@ven_id, id_Insumo);
-SELECT count(Venta_Productos.idVenta) INTO @conteo FROM Venta_Insumos WHERE Venta_Productos.idInsumo = id_Insumo;
+SELECT count(Venta_Insumos.idVenta) INTO @conteo FROM Venta_Insumos WHERE Venta_Insumos.idInsumo = id_Insumo;
 IF @conteo > 1 THEN ROLLBACK;
 ELSE COMMIT;
 END IF;
