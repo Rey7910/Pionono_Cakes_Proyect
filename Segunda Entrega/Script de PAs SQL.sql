@@ -303,3 +303,20 @@ COMMIT;
 END; 
 $$
 DELIMITER ;
+
+
+-- Insertar Proveedor
+
+drop procedure if exists nuevo_proveedor;
+DELIMITER $$
+CREATE PROCEDURE nuevo_proveedor(nit_u varchar(45),nombre_u varchar(45),razon_social_u varchar(45), ubicacion_u varchar(45),
+persona varchar(45), telefono varchar(45),categoria_u varchar(45),terminos varchar(100), email varchar(45))
+BEGIN
+START TRANSACTION;
+insert into proveedor(nit,nombre, razon_social, ubicacion, persona_de_contacto, telefono_de_contacto, categoria,
+terminos_de_negociacion, email) values (nit_u,nombre_u, razon_social_u, ubicacion_u, persona, telefono,categoria_u,
+terminos, email);
+COMMIT;
+END; 
+$$
+DELIMITER ;
