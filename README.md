@@ -2,7 +2,7 @@
 
 ## Proyecto Final de Bases de Datos
 ## 2021-1
-##Desarrolladores:
+## Desarrolladores:
 ### - Reinaldo Toledo Leguizamón
 ### - Santiago Hernández Chaparro
 ### - Johan David Clavijo Rodríguez
